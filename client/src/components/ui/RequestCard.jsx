@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./components.css";
+import "../styles/components.css";
 
 /**
  * RequestCard displays a single blood request's details.
@@ -24,6 +24,7 @@ const RequestCard = ({
 }) => (
     <div className={`request-card ${status.toLowerCase()}`} onClick={onClick}>
         <div className="request-card-header">
+            <img src="/hospital-icon.png" alt="Hospital Icon" className="hospital-icon" />
             <span className="hospital-name">{hospitalName}</span>
             <span className={`status status-${status.toLowerCase()}`}>{status}</span>
         </div>
@@ -38,8 +39,13 @@ const RequestCard = ({
                 <strong>Location:</strong> {location}
             </div>
             <div>
-                <strong>Date Needed:</strong> {dateNeeded}
+                <strong>Needed Before:</strong> {dateNeeded}
             </div>
+        </div>
+        <div className="request-card-footer">
+            <button className="btn btn-primary">Accept</button>
+            <button className="btn btn-secondary">Decline</button>
+            <button className="btn btn-share">Share</button>
         </div>
     </div>
 );

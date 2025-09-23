@@ -1,0 +1,29 @@
+/* Variables */
+:root {
+    --primary: #921233;
+    --secondary: #92123221;
+    --bg: #757575;
+    --black: #000;
+    --white: #fff;
+    --text: #222;
+    --border: #e5e5e5;
+}
+
+/* Resets */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body,
+#root {
+    height: 100%;
+}
+
+body {
+    font-family: Outfit, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
