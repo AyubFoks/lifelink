@@ -1,6 +1,20 @@
 import os
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 class Config:
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///app.db')
+    """
+    Application configuration settings.
+    This class reads environment variables and sets them as Flask configuration attributes.
+    """
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    
+    JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY')
+    
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI')
+    
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY', 'supersecretkey')
+    
+    JSONIFY_PRETTYPRINT_REGULAR = False
