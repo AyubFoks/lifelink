@@ -114,3 +114,18 @@ def register_hospital():
     db.session.commit()
     
     return jsonify({'message': 'Hospital and admin account registered successfully. Awaiting verification.'}), 201
+
+from ..models import User
+
+@auth_bp.route('/profile', methods=['GET'])
+@jwt_required()
+def get_profile():
+    """Gets the profile information of the currently logged-in user."""
+    
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    
+    if user:
+        return jsonify(user.to_dict()), 200
+    
+    return jsonify(message="User not found"), 404
