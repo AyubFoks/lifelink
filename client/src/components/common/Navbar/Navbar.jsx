@@ -11,7 +11,7 @@ export default function Navbar() {
                 <Link to="/">
                     <img src={logo} className='w-auto h-[40px]'/>
                 </Link>
-                <div className='flex gap-6 ' style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.3)" }}>
+                <div className='flex gap-6 ml-6 mr-[-30px]' style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.3)" }}>
                     <NavLink>Home</NavLink>
                     <NavLink>About</NavLink>
                     <NavLink>How it works</NavLink>
