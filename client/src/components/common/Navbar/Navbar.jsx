@@ -17,8 +17,8 @@ export default function Navbar() {
                     <NavLink>How it works</NavLink>
                     <NavLink>Contact</NavLink>
                 </div>
-                <div className='flex gap-4'>
-                    <Button className='text-white'>Donate Now</Button>
+                <div className='flex gap-2'>
+                    <Button className='text-white text-sm'>Donate Now</Button>
                     <Button className='bg-[#921223]/18 text-black '>Sign In</Button>
                 </div>
             </nav>
