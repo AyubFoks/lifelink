@@ -1,0 +1,29 @@
+# Pipfile
+
+# Specifies the source of the packages. PyPI is the default.
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+# Specifies the Python version required for this project.
+[requires]
+python_version = "3.11" # You can adjust this to your specific Python version, e.g., "3.10"
+
+# Specifies the main packages required for the application to run.
+[packages]
+Flask = "*"
+Flask-Cors = "*"
+Flask-SQLAlchemy = "*"
+Flask-Migrate = "*"
+Flask-Bcrypt = "*"
+Flask-JWT-Extended = "*"
+python-dotenv = "*"
+psycopg2-binary = "*"
+SQLAlchemy-serializer = "*"
+Faker = "*" # For seeding the database
+gunicorn = "*" # For production deployment
+
+# Specifies packages only needed for development (optional but good practice).
+[dev-packages]
+# You can add development-specific packages here if needed in the future.
