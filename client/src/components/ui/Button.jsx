@@ -5,7 +5,7 @@ export default function Button({ children, onClick, type = "button", className =
     <button
       type={type}
       onClick={onClick}
-      className={`py-3 px-6 rounded-md shadow-sm bg-red-700 text-white font-semibold hover:opacity-95 ${className}`}
+      className={`py-[4px] px-[7px] rounded-[8px] shadow-sm bg-[#921223] font-semibold hover:opacity-95 ${className}`}
     >
       {children}
     </button>
