@@ -7,11 +7,9 @@ class User(db.Model, SerializerMixin):
     """
 
     __tablename__ = 'users'
-
-    # Exclude password_hash and relationships that would cause circular refs
+    
     serialize_rules = ('-password_hash', '-donations', '-hospital.users')
 
-    # --- Columns ---
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
@@ -21,16 +19,13 @@ class User(db.Model, SerializerMixin):
     availability = db.Column(db.Boolean, default=True)
     role = db.Column(db.String(50), nullable=False, default='donor')
 
-    # Foreign key only used if the user is a hospital_admin
+   
     hospital_id = db.Column(db.Integer, db.ForeignKey('hospitals.id'), nullable=True)
 
-    # --- Relationships ---
-    # hospital_admin -> Hospital
     hospital = db.relationship('Hospital', back_populates='users')
-    # donor -> Donation
+   
     donations = db.relationship('Donation', back_populates='donor')
 
-    # --- Password property ---
     @property
     def password(self):
         raise AttributeError('password is not a readable attribute')
