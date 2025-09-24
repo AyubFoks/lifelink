@@ -10,6 +10,21 @@ requests_bp = Blueprint('requests_bp', __name__)
 @requests_bp.route('/', methods=['POST'])
 @jwt_required()
 def create_request():
+    """
+    Creates a new blood request.
+    includes an authorization check to ensure only users with the 'hospital_admin' role can create requests.
+    """
+    #Get the identity from the JWT.
+    current_user_id = get_jwt_identity()
+    
+    #find the user in the database.
+    user = User.query.get(current_user_id)
+    
+    #verifies the user's role.
+    #denies access if the user is not a hospital administrator
+    if not user or user.role != 'hospital_admin':
+        
+        return jsonify({'message': 'Access forbidden: Only hospital administrators can create requests.'}), 403
     
     data = request.get_json()
     current_user_id = get_jwt_identity()
