@@ -11,7 +11,7 @@ export default function App() {
       <main className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login/:role" element={<Login />} />
           {/* <Route path="/register/:role" element={<Register />} />  */}
           <Route path="/dashboard/hospital" element={<HospitalDashboard />} />
           {/* note to self to add protected routes */}
