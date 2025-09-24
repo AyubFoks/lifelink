@@ -20,7 +20,6 @@ def create_request():
     #find the user in the database.
     user = User.query.get(current_user_id)
     
-    #verifies the user's role.
     #denies access if the user is not a hospital administrator
     if not user or user.role != 'hospital_admin':
         
