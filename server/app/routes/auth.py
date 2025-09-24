@@ -7,7 +7,7 @@ from .. import db
 #creates a blueprint to structure a Flask application into components.
 auth_bp = Blueprint('auth_bp', __name__)
 
-
+#donor registration
 @auth_bp.route('/register', methods=['POST'])
 def register():
     # Get the JSON data sent from the client.
@@ -66,3 +66,51 @@ def login():
         return jsonify(access_token=access_token), 200
     
     return jsonify({'message': 'Invalid email or password'}), 401
+
+
+@auth_bp.route('/register-hospital', methods=['POST'])
+def register_hospital():
+    """
+    Handles registration for a new hospital and its administrator account.
+    This is the ONLY way a user with the 'hospital_admin' role should be created.
+    """
+    data = request.get_json()
+    
+    admin_email = data.get('email')
+    admin_password = data.get('password')
+    admin_full_name = data.get('fullName')
+    hospital_name = data.get('hospitalName')
+    hospital_address = data.get('hospitalAddress')
+    hospital_contact = data.get('hospitalContact')
+    
+    #validates that all required fields are present.
+    if not all([admin_email, admin_password, admin_full_name, hospital_name, hospital_address, hospital_contact]):
+        return jsonify({'message': 'Missing required fields for hospital registration'}), 400
+        
+    if User.query.filter_by(email=admin_email).first():
+        return jsonify({'message': 'An account with this email already exists'}), 409
+    if Hospital.query.filter_by(name=hospital_name).first():
+        return jsonify({'message': 'A hospital with this name is already registered'}), 409
+        
+    new_hospital = Hospital(
+        name=hospital_name,
+        address=hospital_address,
+        contact_info=hospital_contact,
+        verified_status=False 
+    )
+    db.session.add(new_hospital)
+    
+    #creates the new User record for the administrator.
+    new_admin = User(
+        email=admin_email,
+        full_name=admin_full_name,
+        role='hospital_admin',
+        blood_type='N/A',
+        location=hospital_address
+    )
+    new_admin.password = admin_password
+    db.session.add(new_admin)
+    
+    db.session.commit()
+    
+    return jsonify({'message': 'Hospital and admin account registered successfully. Awaiting verification.'}), 201
