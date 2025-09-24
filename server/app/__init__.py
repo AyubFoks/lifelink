@@ -1,4 +1,4 @@
-# server/app/__init__.py
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -23,7 +23,7 @@ def create_app():
     migrate.init_app(app, db)
     jwt.init_app(app)
 
-    # import models so they’re registered with SQLAlchemy
+    
     from app.models import user, hospital, blood_request, donation  
 
     return app

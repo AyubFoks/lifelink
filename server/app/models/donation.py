@@ -9,21 +9,16 @@ class Donation(db.Model, SerializerMixin):
 
     __tablename__ = 'donations'
 
-    # Exclude back-references to avoid infinite recursion when serializing
     serialize_rules = ('-donor.donations', '-request.donations')
-
-    # --- Columns ---
+   
     id = db.Column(db.Integer, primary_key=True)
 
-    # Date and status of the donation
     donation_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     status = db.Column(db.String(50), nullable=False, default='Scheduled')
 
-    # Foreign keys
     donor_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     request_id = db.Column(db.Integer, db.ForeignKey('blood_requests.id'), nullable=False)
 
-    # --- Relationships ---
     donor = db.relationship('User', back_populates='donations')
     request = db.relationship('BloodRequest', back_populates='donations')
 
