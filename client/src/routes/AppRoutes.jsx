@@ -27,6 +27,7 @@ export default function AppRoutes() {
       <Route path="/" element={<Home />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/requests" element={<Requests />} />
       <Route
         path="/hospital"
         element={
@@ -35,6 +36,11 @@ export default function AppRoutes() {
           </PrivateRoute>
         }
       />
+      <Route path="/create-request" element={
+        <ProtectedRoute role="hospital">
+          <CreateRequest />
+        </ProtectedRoute>
+      } />
       <Route
         path="/donor"
         element={
