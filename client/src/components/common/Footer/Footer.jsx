@@ -5,7 +5,7 @@ export default function Footer() {
         <footer className='bg-[#FDFBF9] text-[#403f3f] border-t border-[#dcdcdc]'>
             <div className="max-w-6xl mx-auto px-4 py-8 flex flex-col sm:flex-row justify-between items-start gap-10">
                 <div>
-                    <img src={logo} alt="logo" class="w-auto h-24 "/>
+                    <img src={logo} alt="logo" className="w-auto h-24 "/>
                 </div>
 
                 

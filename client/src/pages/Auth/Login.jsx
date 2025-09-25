@@ -32,7 +32,7 @@ export default function Login() {
         } else {
           // route after login
           if (role === "hospital") nav("/dashboard/hospital");
-          else nav("/"); // donor dashboard later
+          else nav("/dashboard/donor"); // donor dashboard
         }
     };
 
@@ -50,12 +50,12 @@ export default function Login() {
                         <Formik initialValues={initial} validationSchema={loginSchema} onSubmit={handleSubmit}>
                             {({ isSubmitting }) => (
                                 <Form>
-                                    <label className="block mb-2"> {role === "hospital" ? "Hospital Name or Admin Email" : "Email"} </label>
-                                    <Field name="emailOrUsername" placeholder="Value" className="w-1/2 p-2 border rounded mb-2" />
+                                    <label className="block mb-2"> {role === "hospital" ? "Hospital Admin Email" : "Email"} </label>
+                                    <Field name="emailOrUsername" placeholder="email address" className="w-1/2 p-2 border rounded mb-2" />
                                     <ErrorMessage name="emailOrUsername" component="div" className="text-red-600" />
 
                                     <label className="block mt-4 mb-2">Password</label>
-                                    <Field name="password" type="password" placeholder="Value" className="w-1/2 p-2 border rounded mb-2" />
+                                    <Field name="password" type="password" placeholder="password" className="w-1/2 p-2 border rounded mb-2" />
                                     <ErrorMessage name="password" component="div" className="text-red-600" />
 
                                     <div className="mt-6">
