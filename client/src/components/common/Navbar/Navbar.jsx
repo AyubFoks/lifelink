@@ -39,7 +39,7 @@ export default function Navbar() {
           <div className="hidden md:flex gap-2">
             {!user ? (
               <>
-                <Button onClick={() => nav("/login/donor")} className="text-white text-sm">Donate Now</Button>
+                <Button onClick={() => nav("/login/donor")} className="text-white text-sm bg-[#921223]">Donate Now</Button>
                 <Button onClick={() => nav('/login/donor')} className="bg-[#921223]/18 text-black">Sign In</Button>
               </>
             ) : (
