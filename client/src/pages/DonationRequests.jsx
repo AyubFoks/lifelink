@@ -18,8 +18,8 @@ export default function DonationRequests() {
     <div className="requests-page">
       <header>
         <h2>My Donation Requests</h2>
-        <button onClick={() => nav("/request")}>+ New Request</button>
-        <button onClick={() => nav("/")}>Back to Dashboard</button>
+        <button className="text-white px-3 py-2" onClick={() => nav("/request")}>+ New Request</button>
+        <button className="text-white px-3 py-2" onClick={() => nav("/")}>Back to Dashboard</button>
       </header>
 
       <table>

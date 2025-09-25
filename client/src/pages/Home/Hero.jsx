@@ -30,13 +30,13 @@ export default function Hero() {
         </p>
         <div className="flex justify-center space-x-4">
           <Link
-            to="/login/donors"
+            to="/login/donor"
             className="px-6 py-3 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition-colors duration-300"
           >
             For Donors
           </Link>
           <Link
-            to="/login/hospitals"
+            to="/login/hospital"
             className="px-6 py-3 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition-colors duration-300"
           >
             For Hospitals

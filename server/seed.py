@@ -34,7 +34,7 @@ def run_seed():
         name='The Aga Khan University Hospital',
         address='3rd Parklands Ave, Nairobi',
         contact_info='020 366 2000',
-        verified_status=False #this one cannot create requests yet.
+        verified_status=True # enable for seeding multiple hospitals' requests
     )
     db.session.add_all([hospital1, hospital2])
     db.session.commit()
@@ -89,55 +89,49 @@ def run_seed():
 
     
     #create requests only from the VERIFIED hospital.
-    print("Seeding blood requests...")
-    request1 = BloodRequest(
-        patient_name=fake.name(),
-        blood_type_needed='O-',
-        quantity=2,
-        urgency_level='Critical',
-        status='Pending', 
-        hospital_id=hospital1.id
-    )
-    request2 = BloodRequest(
-        patient_name=fake.name(),
-        blood_type_needed='A+',
-        quantity=4,
-        urgency_level='Urgent',
-        status='Pending',
-        hospital_id=hospital1.id
-    )
-    request3 = BloodRequest(
-        patient_name=fake.name(),
-        blood_type_needed='B+',
-        quantity=1,
-        urgency_level='Normal',
-        status='Fulfilled', 
-        hospital_id=hospital1.id
-    )
-    db.session.add_all([request1, request2, request3])
+    print("Seeding blood requests across hospitals...")
+    # Create several sample requests distributed between the two hospitals
+    blood_types = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']
+    urgency_levels = ['Normal', 'Urgent', 'Critical']
+    sample_requests = []
+    for _ in range(12):
+        hosp = random.choice([hospital1, hospital2])
+        req = BloodRequest(
+            patient_name=fake.name(),
+            blood_type_needed=random.choice(blood_types),
+            quantity=random.randint(1, 6),
+            urgency_level=random.choice(urgency_levels),
+            status=random.choice(['Pending', 'Pending', 'Pending', 'Fulfilled']),
+            hospital_id=hosp.id
+        )
+        sample_requests.append(req)
+
+    db.session.add_all(sample_requests)
     db.session.commit()
 
     print("Seeding donations...")
     #finds donors who are a match for the 'O-' request.
     matching_donors_o_neg = [d for d in donors if d.blood_type == 'O-']
-    
-    #creates a completed donation for the fulfilled request.
-    donation1 = Donation(
-        donor_id=random.choice(donors).id,
-        request_id=request3.id,
-        status='Completed'
-    )
-    
-    #scheduled donation for the pending 'O-' request from a matching donor.
-    if matching_donors_o_neg:
+    # create a completed donation for any fulfilled request (if present)
+    fulfilled_req = next((r for r in sample_requests if r.status == 'Fulfilled'), None)
+    if fulfilled_req:
+        donation1 = Donation(
+            donor_id=random.choice(donors).id,
+            request_id=fulfilled_req.id,
+            status='Completed'
+        )
+        db.session.add(donation1)
+
+    # scheduled donation for a pending 'O-' request from a matching donor (if any)
+    pending_o_req = next((r for r in sample_requests if r.status == 'Pending' and r.blood_type_needed == 'O-'), None)
+    if matching_donors_o_neg and pending_o_req:
         donation2 = Donation(
             donor_id=random.choice(matching_donors_o_neg).id,
-            request_id=request1.id,
+            request_id=pending_o_req.id,
             status='Scheduled'
         )
         db.session.add(donation2)
 
-    db.session.add(donation1)
     db.session.commit()
     
     print("Database seeding completed successfully!")

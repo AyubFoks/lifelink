@@ -137,7 +137,7 @@ export default function TestPage() {
                 </div>
                 <div style={{ display: "flex", flexWrap: "wrap" }}>
                     {mockRequests.map((request, index) => (
-                        <RequestCard key={index} {...request} />
+                        <RequestCard key={index} {...request} urgency={request.status} />
                     ))}
                 </div>
             </main>

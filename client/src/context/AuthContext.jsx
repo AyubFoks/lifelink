@@ -1,51 +1,106 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import authService from "../services/authService";
+import { createContext, useState, useContext, useEffect } from "react";
+import authService from "../services/authService.js"; 
+import PropTypes from "prop-types";
 
-const AuthContext = createContext();
-
-export const useAuth = () => useContext(AuthContext);
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
-    try {
-      const raw = localStorage.getItem("ll_user");
-      return raw ? JSON.parse(raw) : null;
-    } catch { return null; }
-  });
-  
-  const [token, setToken] = useState(() => localStorage.getItem("ll_token"));
+  const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (token) authService.setToken(token);
-  }, [token]);
+    const checkAuth = async () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        authService.setToken(token);
+        try {
+          const profileData = await authService.getProfile();
+          if (profileData && !profileData.error) {
+              // Normalize role strings if backend or older clients use alternate names
+              if (profileData.role === 'hospital') profileData.role = 'hospital_admin';
+              setUser(profileData);
+              setIsAuthenticated(true);
+            } else {
+            localStorage.removeItem("token");
+          }
+        } catch (error) {
+          console.error("Failed to fetch profile:", error);
+          localStorage.removeItem("token");
+        }
+      }
+      setLoading(false);
+    };
+    checkAuth();
+  }, []);
 
-  const login = async (credentials) => {
-    const res = await authService.login(credentials);
-    if (res?.token) {
-      setToken(res.token);
-      setUser(res.user);
-      localStorage.setItem("ll_token", res.token);
-      localStorage.setItem("ll_user", JSON.stringify(res.user));
+  const login = async (payload) => {
+    setLoading(true);
+    try {
+      const res = await authService.login(payload);
+      if (res?.error) {
+        throw new Error(res.error.message || "Login failed");
+      }
+
+      if (res.access_token) {
+        localStorage.setItem("token", res.access_token);
+        authService.setToken(res.access_token);
+        const profileData = await authService.getProfile();
+
+        if (profileData && !profileData.error) {
+          setUser(profileData);
+          setIsAuthenticated(true);
+          return { user: profileData };
+        } else {
+          throw new Error("Failed to fetch profile after login.");
+        }
+      }
+    } catch (error) {
+      setUser(null);
+      setIsAuthenticated(false);
+      localStorage.removeItem("token");
+      authService.setToken(null);
+      throw error;
+    } finally {
+      setLoading(false);
     }
-    return res;
-  };
-
-  const register = async (payload) => {
-    const res = await authService.register(payload);
-    return res;
   };
 
   const logout = () => {
-    setToken(null);
-    setUser(null);
-    localStorage.removeItem("ll_token");
-    localStorage.removeItem("ll_user");
+    localStorage.removeItem("token");
     authService.setToken(null);
+    setUser(null);
+    setIsAuthenticated(false);
+  };
+
+  const refreshProfile = async () => {
+    try {
+      const profileData = await authService.getProfile();
+      if (profileData && !profileData.error) {
+        if (profileData.role === 'hospital') profileData.role = 'hospital_admin';
+        setUser(profileData);
+        setIsAuthenticated(true);
+        return profileData;
+      }
+    } catch (err) {
+      console.error('Failed to refresh profile', err);
+    }
+    return null;
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout, register }}>
+    <AuthContext.Provider
+      value={{ user, isAuthenticated, loading, login, logout, refreshProfile }}
+    >
       {children}
     </AuthContext.Provider>
   );
+};
+
+export const useAuth = () => {
+  return useContext(AuthContext);
+};
+
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };

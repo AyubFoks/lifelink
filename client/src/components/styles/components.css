@@ -11,14 +11,13 @@
 
 /* Request Card */
 .request-card {
-    max-width: 300px;
-    min-height: 360px;
+    /* let the grid control width and margins; this class is kept for status/color rules */
+    min-height: 260px;
     background-color: var(--white);
     border: 1px solid var(--border);
     border-radius: 6px;
-    padding: 16px;
-    margin: 16px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
 }
 
 .request-card h3 {
