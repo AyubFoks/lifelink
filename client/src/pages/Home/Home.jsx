@@ -1,5 +1,6 @@
 import Navbar from "../../components/common/Navbar/Navbar";
 import Footer from "../../components/common/Footer/Footer";
+import Hero from "./Hero";
 import lifelinkMain from "../../assets/images/lifelink.jpg";
 import lifelink1 from "../../assets/images/lifelink 1.jpg";
 import lifelink2 from "../../assets/images/lifelink 2.jpg";
@@ -13,24 +14,7 @@ export default function Home() {
       <Navbar />
 
       {/* ----------  HERO  ---------- */}
-      <header id="about" className="flex flex-col md:flex-row items-center justify-between gap-8 px-6 py-32 md:px-16 bg-gradient-to-r from-white to-gray-50">
-        <div className="flex-1 space-y-4">
-          <h1 className="text-3xl md:text-5xl font-bold leading-tight text-black">
-            Connecting Donors, Hospitals & Patients
-          </h1>
-          <p className="text-[#757575] md:text-lg max-w-xl">
-            LifeLink bridges the gap between donors, hospitals, and patients, making life-saving resources accessible to those in need.
-          </p>
-        </div>
-
-        <div className="flex-1">
-          <img
-            src={lifelinkMain}
-            alt="About LifeLink"
-            className="w-full h-80 object-cover rounded-xl shadow-lg"
-          />
-        </div>
-      </header>
+      <Hero />
 
       {/* ----------  HOW IT WORKS (CARDS) ---------- */}
       <section id="how" className="px-6 py-16 md:px-16 bg-white">
