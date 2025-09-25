@@ -194,19 +194,23 @@
     padding-bottom: 8px;
 }
 
-.donor-history ul {
-    list-style: none;
-    padding: 0;
+.donor-history table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.donor-history li {
-    display: flex;
-    justify-content: space-between;
+.donor-history th, .donor-history td {
     padding: 12px 0;
+    text-align: left;
     border-bottom: 1px solid var(--border);
 }
 
-.donor-history li:last-child {
+.donor-history th {
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.donor-history tr:last-child td {
     border-bottom: none;
 }
 
@@ -232,19 +236,23 @@
     padding-bottom: 8px;
 }
 
-.hospital-donation-history ul {
-    list-style: none;
-    padding: 0;
+.hospital-donation-history table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.hospital-donation-history li {
-    display: flex;
-    justify-content: space-between;
+.hospital-donation-history th, .hospital-donation-history td {
     padding: 12px 0;
+    text-align: left;
     border-bottom: 1px solid var(--border);
 }
 
-.hospital-donation-history li:last-child {
+.hospital-donation-history th {
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.hospital-donation-history tr:last-child td {
     border-bottom: none;
 }
 

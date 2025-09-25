@@ -5,15 +5,24 @@ const DonorHistory = ({ donations }) => {
   return (
     <div className="donor-history">
       <h2>Your Donation History</h2>
-      <ul>
-        {donations.map((donation, index) => (
-          <li key={index}>
-            <span>{new Date(donation.date).toLocaleDateString()}</span>
-            <span>{donation.hospital}</span>
-            <span>{donation.donationType}</span>
-          </li>
-        ))}
-      </ul>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Hospital</th>
+            <th>Donation Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          {donations.map((donation, index) => (
+            <tr key={index}>
+              <td>{new Date(donation.date).toLocaleDateString()}</td>
+              <td>{donation.hospital}</td>
+              <td>{donation.donationType}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

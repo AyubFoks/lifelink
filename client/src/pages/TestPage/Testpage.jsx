@@ -116,15 +116,6 @@ export default function TestPage() {
             status: "Urgent",
             dateNeeded: "2024-02-28",
         },
-        {
-            logo: "/client/src/assets/images/general-hospital.png",
-            hospitalName: "Childrens Hospital",
-            bloodTypes: ["O+"],
-            donationType: "Whole Blood",
-            location: "212 Maple Rd, Anytown, USA",
-            status: "Open",
-            dateNeeded: "2024-03-10",
-        },
     ];
 
     const donorHistory = [
