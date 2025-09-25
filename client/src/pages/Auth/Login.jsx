@@ -5,11 +5,14 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useAuth } from "../../context/AuthContext";
 import { loginSchema } from "../../utils/validators";
 import Button from "../../components/ui/Button";
+import React, { useState } from "react";
+import SuccessScreen from "../../components/ui/SuccessScreen";
 
 export default function Login() {
     const { role } = useParams(); // 'donor' or 'hospital'
     const { login } = useAuth();
     const nav = useNavigate();
+    const [showSuccess, setShowSuccess] = useState(false);
 
     const initial = { emailOrUsername: "", password: "" };
 
@@ -31,10 +34,15 @@ export default function Login() {
           setFieldError("emailOrUsername", res.error.message || "Login failed");
         } else {
           // route after login
-          if (role === "hospital") nav("/dashboard/hospital");
-          else nav("/dashboard/donor"); // donor dashboard
+          setShowSuccess(true);
+          setTimeout(() => {
+               if (role === "hospital") nav("/dashboard/hospital");
+               else nav("/dashboard/donor");
+            }, 10000);
         }
     };
+
+    if (showSuccess) return <SuccessScreen user={user} />;
 
     return (
         <div className="flex flex-col min-h-screen">

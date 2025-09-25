@@ -22,6 +22,9 @@ export default function Register() {
            confirmPassword: "",
         };
         const schema = hospitalRegisterSchema;
+        const [showSuccess, setShowSuccess] = useState(false);
+
+        if (showSuccess) return <SuccessScreen user={user} />;
 
         return (
           <div className="flex flex-col min-h-screen">
@@ -36,12 +39,19 @@ export default function Register() {
                     <Formik
                      initialValues={initial}
                      validationSchema={schema}
+
                      onSubmit={async (values, { setSubmitting }) => {
-                         setSubmitting(true);
-                         const res = await register({ ...values, role: "hospital" });
-                         setSubmitting(false);
-                         if (!res?.error) nav("/dashboard/hospital");
-                        }}
+                        setSubmitting(true);
+                        const res = await register({ ...values, role: "hospital" });
+                        setSubmitting(false);
+
+                        if (!res?.error) {
+                            setShowSuccess(true);
+                            setTimeout(() => {
+                                nav("/dashboard/hospital");
+                            }, 10000);
+                        }
+                      }}
                     >
                         {({ isSubmitting }) => (
                            <Form className="space-y-4 mt-20">
@@ -98,6 +108,9 @@ export default function Register() {
         bloodGroup: "A+",
     };
     const schema = donorRegisterSchema;
+    const [showSuccess, setShowSuccess] = useState(false);
+
+    if (showSuccess) return <SuccessScreen user={user} />;
 
     return (
         <div className="flex flex-col min-h-screen">
@@ -113,11 +126,17 @@ export default function Register() {
                       initialValues={initialDonor}
                       validationSchema={schema}
                       onSubmit={async (values, { setSubmitting }) => {
-                         setSubmitting(true);
-                         const res = await register({ ...values, role: "donor" });
-                         setSubmitting(false);
-                         if (!res?.error) nav("/dashboard/donor");
-                        }}
+                        setSubmitting(true);
+                        const res = await register({ ...values, role: "donor" });
+                        setSubmitting(false);
+
+                        if (!res?.error) {
+                            setShowSuccess(true);
+                            setTimeout(() => {
+                                nav("/dashboard/donor");
+                            }, 10000);
+                        }
+                      }}
                     >
                         {({ isSubmitting }) => (
                             <Form className="space-y-4  mt-20">
