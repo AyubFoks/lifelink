@@ -1,46 +1,51 @@
-import React from 'react';
+import { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-export default function DonationRequests({ data, onStatusChange }) {
-  const { id, patientBloodGroup, facility, location, units, urgent, status } = data;
+export default function DonationRequests() {
+  const { hospital } = useAuth();
+  const nav = useNavigate();
+  const [requests, setRequests] = useState([]);
+
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API}/requests?hospital=${hospital.id}`)
+      .then((r) => r.json())
+      .then(setRequests)
+      .catch(() => {});
+  }, [hospital]);
 
   return (
-    <tr>
-      {/* Request ID */}
-      <td>{id}</td>
+    <div className="requests-page">
+      <header>
+        <h2>My Donation Requests</h2>
+        <button onClick={() => nav("/request")}>+ New Request</button>
+        <button onClick={() => nav("/")}>Back to Dashboard</button>
+      </header>
 
-      {/* Blood Group */}
-      <td>{patientBloodGroup}</td>
-
-      {/* Facility / Hospital */}
-      <td>{facility}</td>
-
-      {/* Location */}
-      <td>{location}</td>
-
-      {/* Units Needed */}
-      <td>{units}</td>
-
-      {/* Urgency */}
-      <td>{urgent ? 'URGENT' : 'Normal'}</td>
-
-      {/* Status Dropdown */}
-      <td>
-        <select
-          value={status}
-          onChange={(e) => onStatusChange(id, e.target.value)}
-        >
-          <option>Pending</option>
-          <option>Ongoing</option>
-          <option>Fulfilled</option>
-        </select>
-      </td>
-
-      {/* Action Button */}
-      <td>
-        <button onClick={() => onStatusChange(id, 'Fulfilled')}>
-          Mark Fulfilled
-        </button>
-      </td>
-    </tr>
+      <table>
+        <thead>
+          <tr>
+            <th>Request ID</th>
+            <th>Resource</th>
+            <th>Quantity</th>
+            <th>Urgency</th>
+            <th>Status</th>
+            <th>Requested On</th>
+          </tr>
+        </thead>
+        <tbody>
+          {requests.map((r) => (
+            <tr key={r.id}>
+              <td>{r.id}</td>
+              <td>{r.resourceType}</td>
+              <td>{r.quantity} Units</td>
+              <td>{r.urgency}</td>
+              <td>{r.status}</td>
+              <td>{new Date(r.createdAt).toLocaleDateString()}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }

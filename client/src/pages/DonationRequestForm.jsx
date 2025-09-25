@@ -1,91 +1,67 @@
-import React, { useState } from 'react';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
-export default function RequestForm({ onSubmit }) {
+export default function DonationRequestForm() {
+  const { hospital } = useAuth();
+  const nav = useNavigate();
   const [form, setForm] = useState({
-    patientBloodGroup: '',
-    facility: '',
-    location: '',
-    units: 1,
-    urgent: false,
+    resourceType: "Blood Type A+",
+    quantity: 1,
+    urgency: "Normal",
+    notes: "",
   });
 
-  const handleChange = (e) => {
-    const { name, type, checked, value } = e.target;
-    setForm({
-      ...form,
-      [name]: type === 'checkbox' ? checked : value,
-    });
-  };
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSave = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const newReq = {
-      ...form,
-      id: 'REQ-' + Date.now(),
-      status: 'Pending',
-      updatedAt: new Date().toISOString().slice(0, 10),
-    };
-    onSubmit(newReq);
-    setForm({ patientBloodGroup: '', facility: '', location: '', units: 1, urgent: false });
+    await fetch(`${import.meta.env.VITE_API}/requests`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...form, hospitalId: hospital.id }),
+    });
+    nav("/requests");
   };
 
   return (
-    <form onSubmit={handleSave}>
-      {/* Blood Group */}
-      <select
-        name="patientBloodGroup"
-        required
-        value={form.patientBloodGroup}
-        onChange={handleChange}
-      >
-        <option value="" disabled>Select blood group</option>
-        {['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].map((group) => (
-          <option key={group} value={group}>{group}</option>
-        ))}
-      </select>
+    <div className="form-wrapper">
+      <h2>Request Donation</h2>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Resource Type
+          <select name="resourceType" value={form.resourceType} onChange={handleChange}>
+            <option>Blood Type A+</option>
+            <option>Blood Type O-</option>
+            <option>Plasma</option>
+            <option>Platelets</option>
+          </select>
+        </label>
 
-      {/* Facility */}
-      <input
-        name="facility"
-        placeholder="Patient facility / hospital"
-        required
-        value={form.facility}
-        onChange={handleChange}
-      />
+        <label>
+          Quantity (Units)
+          <input type="number" name="quantity" min="1" value={form.quantity} onChange={handleChange} required />
+        </label>
 
-      {/* Location */}
-      <input
-        name="location"
-        placeholder="Location"
-        required
-        value={form.location}
-        onChange={handleChange}
-      />
+        <label>
+          Urgency
+          <select name="urgency" value={form.urgency} onChange={handleChange}>
+            <option>Low</option>
+            <option>Normal</option>
+            <option>High</option>
+            <option>Critical</option>
+          </select>
+        </label>
 
-      {/* Units */}
-      <input
-        name="units"
-        type="number"
-        min={1}
-        placeholder="Units"
-        required
-        value={form.units}
-        onChange={handleChange}
-      />
+        <label>
+          Additional Notes
+          <textarea name="notes" value={form.notes} onChange={handleChange} />
+        </label>
 
-      {/* Urgent Checkbox */}
-      <label>
-        <input
-          name="urgent"
-          type="checkbox"
-          checked={form.urgent}
-          onChange={handleChange}
-        />
-        Urgent
-      </label>
-
-      {/* Submit Button */}
-      <button type="submit">Create Request</button>
-    </form>
+        <button type="submit">Submit Request</button>
+        <button type="button" onClick={() => nav("/")}>Cancel</button>
+      </form>
+    </div>
   );
 }

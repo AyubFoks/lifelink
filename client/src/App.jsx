@@ -4,8 +4,9 @@ import Home from "./pages/Home/Home";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import HospitalDashboard from "./pages/Dashboard/HospitalDashboard";
+import DonorDashboardPage from "./pages/Dashboard/DonorDashboardPage";
 import About from "./components/common/About";
-import TestPage from "./pages/TestPage/Testpage";
+import ProtectedRoute from "./components/common/ProtectedRoute";
 
 export default function App() {
   return (
@@ -14,11 +15,25 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/testpage" element={<TestPage />} />
           <Route path="/login/:role" element={<Login />} />
-          <Route path="/register/:role" element={<Register />} />
-          <Route path="/dashboard/hospital" element={<HospitalDashboard />} />
+          <Route path="/register/:role" element={<Register />} />  
           {/* note to self to add protected routes */}
+          <Route
+            path="/dashboard/hospital"
+            element={
+              <ProtectedRoute role="hospital">
+                <HospitalDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/donor"
+            element={
+              <ProtectedRoute role="donor">
+                <DonorDashboardPage />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </main>
     </div>
