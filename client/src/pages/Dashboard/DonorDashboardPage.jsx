@@ -5,7 +5,6 @@ import LifelinkLogo from '../../assets/logos/lifelink-full-logo.svg';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
-import './DonorDashboardPage.css';
 
 export default function DonorDashboardPage() {
   const { donor, setNextAppointment, recordDonation } = useDonor();

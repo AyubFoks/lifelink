@@ -31,37 +31,42 @@ export default function Home() {
         </div>
       </header>
 
-      {/* ----------  HOW IT WORKS  ---------- */}
-      <section id="how" className="px-6 py-16 md:px-16 bg-white">
-        <h2 className="text-3xl font-bold text-center text-black mb-4">How LifeLink Works</h2>
-        <p className="text-center text-[#757575] max-w-3xl mx-auto mb-10">
-          LifeLink streamlines the process of connecting donors and hospitals, ensuring efficient and effective resource allocation.
-        </p>
+      {/* ----------  HOW IT WORKS (CARDS) ---------- */}
+<section id="how" className="px-6 py-16 md:px-16 bg-white">
+  <h2 className="text-3xl font-bold text-center text-black mb-4">How LifeLink Works</h2>
+  <p className="text-center text-[#757575] max-w-3xl mx-auto mb-10">
+    LifeLink streamlines the process of connecting donors and hospitals, ensuring efficient and effective resource allocation.
+  </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto text-center">
-          {/* Step 1 */}
-          <article>
-            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-red-100 flex items-center justify-center text-2xl font-bold text-black">1</div>
-            <h3 className="text-xl font-semibold text-black mb-2">For Donors</h3>
-            <p className="text-[#757575] text-sm">Donors register their willingness to contribute, specifying the types of resources they can provide.</p>
-          </article>
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+    {/* Card 1 */}
+    <article className="bg-gray-50 border border-gray-200 rounded-xl p-6 flex flex-col items-center text-center space-y-4 h-full">
+      <div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center text-2xl font-bold text-black">1</div>
+      <h3 className="text-xl font-semibold text-black">For Donors</h3>
+      <p className="text-[#757575] text-sm flex-1">
+        Donors register their willingness to contribute, specifying the types of resources they can provide.
+      </p>
+    </article>
 
-          {/* Step 2 */}
-          <article>
-            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-red-100 flex items-center justify-center text-2xl font-bold text-black">2</div>
-            <h3 className="text-xl font-semibold text-black mb-2">For Hospitals</h3>
-            <p className="text-[#757575] text-sm">Hospitals submit their urgent needs, detailing the required resources and the urgency of the situation.</p>
-          </article>
+    {/* Card 2 */}
+    <article className="bg-gray-50 border border-gray-200 rounded-xl p-6 flex flex-col items-center text-center space-y-4 h-full">
+      <div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center text-2xl font-bold text-black">2</div>
+      <h3 className="text-xl font-semibold text-black">For Hospitals</h3>
+      <p className="text-[#757575] text-sm flex-1">
+        Hospitals submit their urgent needs, detailing the required resources and the urgency of the situation.
+      </p>
+    </article>
 
-          {/* Step 3 */}
-          <article>
-            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-red-100 flex items-center justify-center text-2xl font-bold text-black">3</div>
-            <h3 className="text-xl font-semibold text-black mb-2">Seamless Matching</h3>
-            <p className="text-[#757575] text-sm">LifeLink's system matches donor resources with hospital needs, facilitating quick and direct communication.</p>
-          </article>
-        </div>
-      </section>
-
+    {/* Card 3 */}
+    <article className="bg-gray-50 border border-gray-200 rounded-xl p-6 flex flex-col items-center text-center space-y-4 h-full">
+      <div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center text-2xl font-bold text-black">3</div>
+      <h3 className="text-xl font-semibold text-black">Seamless Matching</h3>
+      <p className="text-[#757575] text-sm flex-1">
+        LifeLink's system matches donor resources with hospital needs, facilitating quick and direct communication.
+      </p>
+    </article>
+  </div>
+</section>
       {/* ----------  BENEFITS  ---------- */}
       <section className="px-6 py-16 md:px-16 bg-gray-50">
         {/* Benefits for Donors */}
