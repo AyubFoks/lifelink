@@ -1,191 +1,183 @@
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import authService from "../../services/authService";
+import { useState } from "react";
 import Navbar from "../../components/common/Navbar/Navbar";
 import Footer from "../../components/common/Footer/Footer";
-import React, {useState} from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useNavigate, useParams, Link } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
-import { donorRegisterSchema, hospitalRegisterSchema } from "../../utils/validators";
 import Button from "../../components/ui/Button";
 
-export default function Register() {
-    const { role } = useParams(); // donor | hospital
-    const { register } = useAuth();
-    const nav = useNavigate();
+const Register = () => {
+  const { role } = useParams(); // 'donor' or 'hospital'
+  const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
-    if (role === "hospital") {
-        const initial = {
-           hospitalName: "",
-           adminName: "",
-           adminEmail: "",
-           location: "",
-           password: "",
-           confirmPassword: "",
+  const isHospital = role === "hospital";
+
+  const initialValues = {
+    fullName: "",
+    email: "",
+    password: "",
+    bloodType: "",
+    location: "",
+    hospitalName: "",
+    hospitalAddress: "",
+    hospitalContact: "",
+  };
+
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().email("Invalid email address").required("Required"),
+    password: Yup.string()
+      .min(6, "Password must be at least 6 characters")
+      .required("Required"),
+    ...(isHospital
+      ? {
+          hospitalName: Yup.string().required("Hospital Name is required"),
+          hospitalAddress: Yup.string().required("Hospital Address is required"),
+          hospitalContact: Yup.string().required("Hospital Contact is required"),
+        }
+      : {
+          fullName: Yup.string().required("Full Name is required"),
+          bloodType: Yup.string().required("Blood Type is required"),
+          location: Yup.string().required("Location is required"),
+        }),
+  });
+
+  const handleSubmit = async (values, { setSubmitting }) => {
+    setError(null);
+    const payload = isHospital
+      ? {
+          hospitalName: values.hospitalName,
+          email: values.email,
+          password: values.password,
+          hospitalAddress: values.hospitalAddress,
+          hospitalContact: values.hospitalContact,
+        }
+      : {
+          fullName: values.fullName,
+          email: values.email,
+          password: values.password,
+          bloodType: values.bloodType,
+          location: values.location,
         };
-        const schema = hospitalRegisterSchema;
-        const [showSuccess, setShowSuccess] = useState(false);
 
-        if (showSuccess) return <SuccessScreen user={user} />;
+    try {
+      const service = isHospital ? authService.registerHospital : authService.register;
+      const data = await service(payload);
 
-        return (
-          <div className="flex flex-col min-h-screen">
-            <Navbar/>
-            <main className="flex-1 px-4 sm:px-6 py-12 mt-20">
-                <div className="w-full max-w-lg mx-auto">
-                    <h1 className="text-3xl font-bold text-center">Create your Hospital Account</h1>
-                    <div className="flex gap-1 text-lg justify-center mb-8">
-                        <h3>Already have an account?</h3>
-                        <Link to={`/login/${role}`} className="text-[#921223] underline">Log in here</Link>
-                    </div>
-                    <Formik
-                     initialValues={initial}
-                     validationSchema={schema}
+      if (data.error) {
+        throw new Error(data.error.message || "Registration failed.");
+      }
 
-                     onSubmit={async (values, { setSubmitting }) => {
-                        setSubmitting(true);
-                        const res = await register({ ...values, role: "hospital" });
-                        setSubmitting(false);
-
-                        if (!res?.error) {
-                            setShowSuccess(true);
-                            setTimeout(() => {
-                                nav("/dashboard/hospital");
-                            }, 10000);
-                        }
-                      }}
-                    >
-                        {({ isSubmitting }) => (
-                           <Form className="space-y-4 mt-20">
-                                <div>
-                                  <label className="block mb-2">Hospital Name</label>
-                                  <Field name="hospitalName" className="w-full p-2 border rounded" placeholder="hospital name" autoComplete="name"/>
-                                  <ErrorMessage name="hospitalName" component="div" className="text-red-600" />
-                                </div>
-                                <div>
-                                  <label className="block mb-2">Admin Name</label>
-                                  <Field name="adminName" className="w-full p-2 border rounded" placeholder="admin full name" autoComplete="name"/>
-                                  <ErrorMessage name="adminName" component="div" className="text-red-600" />
-                                </div>
-                                <div>
-                                  <label className="block mb-2">Admin Email</label>
-                                  <Field name="adminEmail" type="email" className="w-full p-2 border rounded" placeholder="work email"autoComplete="email"/>
-                                  <ErrorMessage name="adminEmail" component="div" className="text-red-600" />
-                                </div>
-                                <div>
-                                  <label className="block mb-2">Hospital Location</label>
-                                  <Field name="location" className="w-full p-2 border rounded" placeholder="hospital physical address/location"/>
-                                  <ErrorMessage name="location" component="div" className="text-red-600" />
-                                </div>
-                                <div>
-                                  <label className="block mb-2">Password</label>
-                                  <Field name="password" type="password" className="w-full p-2 border rounded" placeholder="password" autoComplete="new-password" />
-                                  <ErrorMessage name="password" component="div" className="text-red-600" />
-                                </div>
-                                <div>
-                                  <label className="block mb-2">Confirm Password</label>
-                                  <Field name="confirmPassword" type="password" className="w-full p-2 border rounded" placeholder="password" autoComplete="new-password" />
-                                  <ErrorMessage name="confirmPassword" component="div" className="text-red-600" />
-                                </div>
-                                <Button type="submit" className="w-full text-white mt-6">
-                                  {isSubmitting ? "Registering..." : "Register"}
-                                </Button>
-                            </Form>
-                        )}
-                    </Formik>
-                </div>
-            </main>
-            <Footer/>
-          </div>
-        );
+      navigate(`/login/${role}`);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setSubmitting(false);
     }
+  };
 
-    // donor form
-    const initialDonor = {
-        name: "",
-        email: "",
-        address: "",
-        password: "",
-        confirmPassword: "",
-        bloodGroup: "A+",
-    };
-    const schema = donorRegisterSchema;
-    const [showSuccess, setShowSuccess] = useState(false);
-
-    if (showSuccess) return <SuccessScreen user={user} />;
-
-    return (
-        <div className="flex flex-col min-h-screen">
-            <Navbar/>
-            <main className="flex-1 px-4 sm:px-6 py-12 mt-20">
-                <div className="w-full max-w-lg mx-auto">
-                    <h1 className="text-3xl font-bold text-center">Create your Donor Account</h1>
-                    <div className="flex gap-1 text-lg justify-center mb-6 sm:text-lg">
-                        <h3>Already have an account?</h3>
-                        <Link to={`/login/${role}`} className="text-[#921223] underline">Log in here</Link>
-                    </div>
-                    <Formik
-                      initialValues={initialDonor}
-                      validationSchema={schema}
-                      onSubmit={async (values, { setSubmitting }) => {
-                        setSubmitting(true);
-                        const res = await register({ ...values, role: "donor" });
-                        setSubmitting(false);
-
-                        if (!res?.error) {
-                            setShowSuccess(true);
-                            setTimeout(() => {
-                                nav("/dashboard/donor");
-                            }, 10000);
-                        }
-                      }}
-                    >
-                        {({ isSubmitting }) => (
-                            <Form className="space-y-4  mt-20">
-                                <div>
-                                    <label className="block mb-2">Full Name</label>
-                                    <Field name="name" className="w-full p-2 border rounded" placeholder="full name" autoComplete="name"/>
-                                    <ErrorMessage name="name" component="div" className="text-red-600" />
-                                </div>
-                                <div>
-                                    <label className="block mb-2">Email</label>
-                                    <Field name="email" type="email" className="w-full p-2 border rounded" placeholder="email address" autoComplete="email"/>
-                                    <ErrorMessage name="email" component="div" className="text-red-600" />
-                                </div>
-                                <div>
-                                    <label className="block mb-2">Password</label>
-                                    <Field name="password" type="password" className="w-full p-2 border rounded" placeholder="password" autoComplete="new-password" />
-                                    <ErrorMessage name="password" component="div" className="text-red-600" />
-                                </div>
-                                <div>
-                                    <label className="block mb-2">Confirm Password</label>
-                                    <Field name="confirmPassword" type="password" className="w-full p-2 border rounded" placeholder="password" autoComplete="new-password"/>
-                                    <ErrorMessage name="confirmPassword" component="div" className="text-red-600" />
-                                </div>
-                                <div className="flex gap-2 w-full justify-between">
-                                    <div className="flex-1">
-                                        <label className="block mb-2">Blood Group</label>
-                                        <Field as="select" name="bloodGroup" className="w-full p-2 border rounded">
-                                            <option>A+</option><option>A-</option>
-                                            <option>B+</option><option>B-</option>
-                                            <option>AB+</option><option>AB-</option>
-                                            <option>O+</option><option>O-</option>
-                                        </Field>
-                                        <ErrorMessage name="bloodGroup" component="div" className="text-red-600" />
-                                    </div>
-                                    <div className="flex-1">
-                                        <label className="block mb-2">Address</label>
-                                        <Field name="address" className="w-full p-2 border rounded" placeholder="physical address"/>
-                                        <ErrorMessage name="address" component="div" className="text-red-600" />
-                                    </div>
-                                </div>
-                                <Button type="submit" className="w-full text-white mt-6">
-                                    {isSubmitting ? "Registering..." : "Register"}
-                                </Button>
-                            </Form>
-                        )}
-                    </Formik>
-                </div>
-            </main>
-            <Footer/>
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <main className="flex-1 px-4 sm:px-6 py-12 mt-20">
+        <div className="w-full max-w-lg mx-auto text-center">
+          <h1 className="font-bold text-3xl">
+            Create a New {isHospital ? "Hospital" : "Donor"} Account
+          </h1>
+          <div className="flex gap-1 text-lg justify-center sm:text-lg">
+            <h3>Already have an account?</h3>
+            <Link to={`/login/${role}`} className="text-[#921223] underline">
+              Sign in here
+            </Link>
+          </div>
+          {error && <p className="text-red-500 text-center mt-4">{error}</p>}
+          <div className="mt-10">
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              onSubmit={handleSubmit}
+            >
+              {({ isSubmitting }) => (
+                <Form className="space-y-6 text-left">
+                  {isHospital ? (
+                    <>
+                      {/* Hospital Fields */}
+                      <div>
+                        <label htmlFor="hospitalName" className="block mb-2">Hospital Name</label>
+                        <Field name="hospitalName" className="w-full p-2 border rounded" />
+                        <ErrorMessage name="hospitalName" component="div" className="text-red-600" />
+                      </div>
+                      <div>
+                        <label htmlFor="email" className="block mb-2">Admin Email</label>
+                        <Field name="email" type="email" className="w-full p-2 border rounded" />
+                        <ErrorMessage name="email" component="div" className="text-red-600" />
+                      </div>
+                       <div>
+                        <label htmlFor="hospitalAddress" className="block mb-2">Hospital Address</label>
+                        <Field name="hospitalAddress" className="w-full p-2 border rounded" />
+                        <ErrorMessage name="hospitalAddress" component="div" className="text-red-600" />
+                      </div>
+                       <div>
+                        <label htmlFor="hospitalContact" className="block mb-2">Hospital Contact</label>
+                        <Field name="hospitalContact" className="w-full p-2 border rounded" />
+                        <ErrorMessage name="hospitalContact" component="div" className="text-red-600" />
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      {/* Donor Fields */}
+                      <div>
+                        <label htmlFor="fullName" className="block mb-2">Full Name</label>
+                        <Field name="fullName" className="w-full p-2 border rounded" />
+                        <ErrorMessage name="fullName" component="div" className="text-red-600" />
+                      </div>
+                      <div>
+                        <label htmlFor="email" className="block mb-2">Email</label>
+                        <Field name="email" type="email" className="w-full p-2 border rounded" />
+                        <ErrorMessage name="email" component="div" className="text-red-600" />
+                      </div>
+                       <div>
+                        <label htmlFor="bloodType" className="block mb-2">Blood Type</label>
+                        <Field as="select" name="bloodType" className="w-full p-2 border rounded">
+                            <option value="">Select Blood Type</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                        </Field>
+                        <ErrorMessage name="bloodType" component="div" className="text-red-600" />
+                      </div>
+                       <div>
+                        <label htmlFor="location" className="block mb-2">Location</label>
+                        <Field name="location" className="w-full p-2 border rounded" />
+                        <ErrorMessage name="location" component="div" className="text-red-600" />
+                      </div>
+                    </>
+                  )}
+                  <div>
+                    <label htmlFor="password">Password</label>
+                    <Field name="password" type="password" className="w-full p-2 border rounded" />
+                    <ErrorMessage name="password" component="div" className="text-red-600" />
+                  </div>
+                  <div className="mt-6">
+                    <Button type="submit" disabled={isSubmitting} className="w-full text-white">
+                      {isSubmitting ? "Registering..." : "Register"}
+                    </Button>
+                  </div>
+                </Form>
+              )}
+            </Formik>
+          </div>
         </div>
-    );
-}
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
+export default Register;

@@ -36,17 +36,20 @@ export default function Navbar() {
           </div>
 
           {/* Desktop Buttons */}
-          <div className="hidden md:flex gap-2">
+          <div className="hidden md:flex items-center gap-4">
             {!user ? (
               <>
-                <Button onClick={() => nav("/login/donor")} className="text-white text-sm bg-[#921223]">Donate Now</Button>
+                <Button onClick={() => nav("/login/donor")} className="text-white text-sm">Donate Now</Button>
                 <Button onClick={() => nav('/login/donor')} className="bg-[#921223]/18 text-black">Sign In</Button>
               </>
             ) : (
-              <>
-                <span className="mr-2">Hi, {user.name || user.adminName}</span>
-                <button onClick={() => { logout(); nav("/"); }} className="px-3 py-2 border rounded">Logout</button>
-              </>
+              <div className="flex items-center gap-3">
+                <div className="text-sm text-[#921223]">
+                  <span className="mr-1">Hi,</span>
+                  <span className="font-semibold">{(user.full_name || user.name || user.adminName || user.email)}</span>
+                </div>
+                <Button onClick={() => { logout(); nav("/"); }} className="px-3 py-2 text-white">Logout</Button>
+              </div>
             )}
           </div>
         </div>
@@ -66,8 +69,11 @@ export default function Navbar() {
                 </>
               ) : (
                 <>
-                  <span className="mr-2">Hi, {user.name || user.adminName}</span>
-                  <button onClick={() => { logout(); nav("/"); setIsOpen(false); }} className="px-3 py-2 border rounded">Logout</button>
+                  <div className="text-sm text-[#921223] mb-2">
+                    <span className="mr-1">Hi,</span>
+                    <span className="font-semibold">{(user.full_name || user.name || user.adminName || user.email)}</span>
+                  </div>
+                  <Button onClick={() => { logout(); nav("/"); setIsOpen(false); }} className="px-3 py-2 text-white">Logout</Button>
                 </>
               )}
             </div>

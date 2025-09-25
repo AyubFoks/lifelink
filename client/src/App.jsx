@@ -7,6 +7,12 @@ import HospitalDashboard from "./pages/Dashboard/HospitalDashboard";
 import DonorDashboardPage from "./pages/Dashboard/DonorDashboardPage";
 import About from "./components/common/About";
 import ProtectedRoute from "./components/common/ProtectedRoute";
+import DonationsHistory from './pages/DonationsHistory';
+import UpdateProfile from './pages/Profile/UpdateProfile';
+import RequestsPage from './pages/RequestsPage';
+import ScheduleAppointment from './pages/ScheduleAppointment';
+import HospitalRequests from './pages/Dashboard/HospitalRequests';
+import DonationRequestForm from './pages/DonationRequestForm';
 
 export default function App() {
   return (
@@ -27,10 +33,52 @@ export default function App() {
             }
           />
           <Route
+            path="/dashboard/hospital/requests"
+            element={
+              <ProtectedRoute role="hospital">
+                <HospitalRequests />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/dashboard/donor"
             element={
               <ProtectedRoute role="donor">
                 <DonorDashboardPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/donations/history"
+            element={
+              <ProtectedRoute role="donor">
+                <DonationsHistory />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/donations/schedule/:id"
+            element={
+              <ProtectedRoute role="donor">
+                <ScheduleAppointment />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/request-donation"
+            element={
+              <ProtectedRoute role="hospital">
+                <DonationRequestForm />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/requests" element={<RequestsPage />} />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <UpdateProfile />
               </ProtectedRoute>
             }
           />

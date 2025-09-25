@@ -16,14 +16,31 @@ def create_app(config_class=Config):
     """Creates and configures an instance of the Flask application."""
     app = Flask(__name__)
     app.config.from_object(config_class)
+    # Prevent Flask from redirecting requests that differ only by a trailing slash.
+    # This avoids returning 3xx redirects for preflight OPTIONS requests which
+    # the browser will block during CORS checks.
+    app.url_map.strict_slashes = False
 
    
     db.init_app(app)
     migrate.init_app(app, db)
     bcrypt.init_app(app)
     jwt.init_app(app)
-    
-    CORS(app)
+    # Configure CORS to allow the frontend dev server and expose the Authorization header
+    # This enables preflight (OPTIONS) requests to succeed and allows the browser to send
+    # the Authorization header with requests.
+    CORS(app,
+         resources={r"/api/*": {"origins": ["http://localhost:5173"]}},
+         supports_credentials=True,
+         expose_headers=["Authorization"],
+         allow_headers=["Content-Type", "Authorization"])
+
+    # Ensure we never send redirects for API endpoints (helps preflight checks)
+    # Note: Flask-CORS is configured above and will add the appropriate
+    # Access-Control-* headers. Avoid setting these headers manually here
+    # because it can create duplicate header values (which browsers reject).
+    # If additional per-response handling is required later, use
+    # response.headers[...] = value to replace values rather than .add().
 
 
     with app.app_context():
