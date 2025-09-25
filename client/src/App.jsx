@@ -7,6 +7,7 @@ import HospitalDashboard from "./pages/Dashboard/HospitalDashboard";
 import DonorDashboardPage from "./pages/Dashboard/DonorDashboardPage";
 import About from "./components/common/About";
 import ProtectedRoute from "./components/common/ProtectedRoute";
+import About from "./components/common/About";
 
 export default function App() {
   return (
