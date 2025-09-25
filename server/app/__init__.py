@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
@@ -26,11 +27,16 @@ def create_app(config_class=Config):
     bcrypt.init_app(app)
     jwt.init_app(app)
 
-    # Configure CORS to allow the frontend dev server and expose the Authorization header
-    # This enables preflight (OPTIONS) requests to succeed and allows the browser to send
-    # the Authorization header with requests.
+    # Configure CORS to allow the frontend dev server and the deployed frontend.
+    # FRONTEND_URL can be provided in the environment (useful on Render/Vercel).
+    frontend_url = os.environ.get('FRONTEND_URL')
+    allowed_origins = ["http://localhost:5173"]
+    if frontend_url:
+        allowed_origins.append(frontend_url)
+    # Always include wildcard for simple local debugging if explicitly set
+    # (not recommended for production).
     CORS(app,
-         resources={r"/api/*": {"origins": ["http://localhost:5173"]}},
+         resources={r"/api/*": {"origins": allowed_origins}},
          supports_credentials=True,
          expose_headers=["Authorization"],
          allow_headers=["Content-Type", "Authorization"])
@@ -42,7 +48,7 @@ def create_app(config_class=Config):
     # If additional per-response handling is required later, use
     # response.headers[...] = value to replace values rather than .add().
 
-    CORS(app)
+    # A second global CORS() call is unnecessary; Flask-CORS is configured above.
 
 
     # Example root route
