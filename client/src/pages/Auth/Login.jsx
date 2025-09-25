@@ -44,7 +44,26 @@ export default function Login() {
                     <h1 className="font-bold text-3xl">Log In to Your {role === "hospital" ? "Hospital" : "Donor"} Account</h1>
                     <div className="flex gap-1 text-lg justify-center">
                         <h3>Don't have an account?</h3>
-                        <Link to='/register' className="text-[#921223] underline">Sign up here</Link>
+                        <Link to={`/register/${role}`} className="text-[#921223] underline">Sign up here</Link>
+                    </div>
+                    <div className="mt-20">
+                        <Formik initialValues={initial} validationSchema={loginSchema} onSubmit={handleSubmit}>
+                            {({ isSubmitting }) => (
+                                <Form>
+                                    <label className="block mb-2"> {role === "hospital" ? "Hospital Name or Admin Email" : "Email"} </label>
+                                    <Field name="emailOrUsername" placeholder="Value" className="w-1/2 p-2 border rounded mb-2" />
+                                    <ErrorMessage name="emailOrUsername" component="div" className="text-red-600" />
+
+                                    <label className="block mt-4 mb-2">Password</label>
+                                    <Field name="password" type="password" placeholder="Value" className="w-1/2 p-2 border rounded mb-2" />
+                                    <ErrorMessage name="password" component="div" className="text-red-600" />
+
+                                    <div className="mt-6">
+                                        <Button type="submit" className="w-1/2 text-white">{isSubmitting ? "Signing in..." : "Sign In"}</Button>
+                                    </div>
+                                </Form>
+                            )}
+                        </Formik>
                     </div>
                 </div>
             </main>
