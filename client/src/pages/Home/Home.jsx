@@ -33,11 +33,11 @@ export default function Home() {
       </header>
 
       {/* ----------  HOW IT WORKS (CARDS) ---------- */}
-<section id="how" className="px-6 py-16 md:px-16 bg-white">
-  <h2 className="text-3xl font-bold text-center text-black mb-4">How LifeLink Works</h2>
-  <p className="text-center text-[#757575] max-w-3xl mx-auto mb-10">
-    LifeLink streamlines the process of connecting donors and hospitals, ensuring efficient and effective resource allocation.
-  </p>
+      <section id="how" className="px-6 py-16 md:px-16 bg-white">
+        <h2 className="text-3xl font-bold text-center text-black mb-4">How LifeLink Works</h2>
+        <p className="text-center text-[#757575] max-w-3xl mx-auto mb-10">
+          LifeLink streamlines the process of connecting donors and hospitals, ensuring efficient and effective resource allocation.
+        </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto text-center">
           {/* Step 1 */}
@@ -63,17 +63,6 @@ export default function Home() {
         </div>
       </section>
 
-
-    {/* Card 3 */}
-    <article className="bg-gray-50 border border-gray-200 rounded-xl p-6 flex flex-col items-center text-center space-y-4 h-full">
-      <div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center text-2xl font-bold text-black">3</div>
-      <h3 className="text-xl font-semibold text-black">Seamless Matching</h3>
-      <p className="text-[#757575] text-sm flex-1">
-        LifeLink's system matches donor resources with hospital needs, facilitating quick and direct communication.
-      </p>
-    </article>
-  </div>
-</section>
       {/* ----------  BENEFITS  ---------- */}
       <section className="px-6 py-16 md:px-16 bg-gray-50">
         {/* Benefits for Donors */}
