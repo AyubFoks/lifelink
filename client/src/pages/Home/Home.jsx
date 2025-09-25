@@ -5,6 +5,7 @@ import lifelink1 from "../../assets/images/lifelink 1.jpg";
 import lifelink2 from "../../assets/images/lifelink 2.jpg";
 import lifelink3 from "../../assets/images/lifelink 3.jpg";
 import lifelink4 from "../../assets/images/lifelink 4.jpg";
+import  { Link }  from 'react-router-dom';
 
 export default function Home() {
   return (
@@ -12,7 +13,7 @@ export default function Home() {
       <Navbar />
 
       {/* ----------  HERO  ---------- */}
-      <header id="about" className="flex flex-col md:flex-row items-center justify-between gap-8 px-6 py-16 md:px-16 bg-gradient-to-r from-white to-gray-50">
+      <header id="about" className="flex flex-col md:flex-row items-center justify-between gap-8 px-6 py-32 md:px-16 bg-gradient-to-r from-white to-gray-50">
         <div className="flex-1 space-y-4">
           <h1 className="text-3xl md:text-5xl font-bold leading-tight text-black">
             Connecting Donors, Hospitals & Patients
@@ -38,24 +39,30 @@ export default function Home() {
     LifeLink streamlines the process of connecting donors and hospitals, ensuring efficient and effective resource allocation.
   </p>
 
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-    {/* Card 1 */}
-    <article className="bg-gray-50 border border-gray-200 rounded-xl p-6 flex flex-col items-center text-center space-y-4 h-full">
-      <div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center text-2xl font-bold text-black">1</div>
-      <h3 className="text-xl font-semibold text-black">For Donors</h3>
-      <p className="text-[#757575] text-sm flex-1">
-        Donors register their willingness to contribute, specifying the types of resources they can provide.
-      </p>
-    </article>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto text-center">
+          {/* Step 1 */}
+          <article>
+            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-red-100 flex items-center justify-center text-2xl font-bold text-black">1</div>
+            <h3 className="text-xl font-semibold text-black mb-2">For Donors</h3>
+            <p className="text-[#757575] text-sm">Donors <Link to='/login/donor' className="text-[#921223] underline">log in</Link> or <Link to='/register/donor' className="text-[#921223] underline">create an account</Link>, register their willingness to contribute, specifying the types of resources they can provide.</p>
+          </article>
 
-    {/* Card 2 */}
-    <article className="bg-gray-50 border border-gray-200 rounded-xl p-6 flex flex-col items-center text-center space-y-4 h-full">
-      <div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center text-2xl font-bold text-black">2</div>
-      <h3 className="text-xl font-semibold text-black">For Hospitals</h3>
-      <p className="text-[#757575] text-sm flex-1">
-        Hospitals submit their urgent needs, detailing the required resources and the urgency of the situation.
-      </p>
-    </article>
+          {/* Step 2 */}
+          <article>
+            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-red-100 flex items-center justify-center text-2xl font-bold text-black">2</div>
+            <h3 className="text-xl font-semibold text-black mb-2">For Hospitals</h3>
+            <p className="text-[#757575] text-sm">Hospitals <Link to='/login/hospital' className="text-[#921223] underline">log in</Link> or <Link to='/register/hospital' className="text-[#921223] underline">create an account</Link>, then submit their urgent needs, detailing the required resources and the urgency of the situation.</p>
+          </article>
+
+          {/* Step 3 */}
+          <article>
+            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-red-100 flex items-center justify-center text-2xl font-bold text-black">3</div>
+            <h3 className="text-xl font-semibold text-black mb-2">Seamless Matching</h3>
+            <p className="text-[#757575] text-sm">LifeLink's system matches donor resources with hospital needs, facilitating quick and direct communication.</p>
+          </article>
+        </div>
+      </section>
+
 
     {/* Card 3 */}
     <article className="bg-gray-50 border border-gray-200 rounded-xl p-6 flex flex-col items-center text-center space-y-4 h-full">
