@@ -26,8 +26,8 @@ export default function Register() {
         return (
           <div className="flex flex-col min-h-screen">
             <Navbar/>
-            <main>
-                <div className="max-w-lg mx-auto py-25">
+            <main className="flex-1 px-4 sm:px-6 py-12 mt-20">
+                <div className="w-full max-w-lg mx-auto">
                     <h1 className="text-3xl font-bold text-center">Create your Hospital Account</h1>
                     <div className="flex gap-1 text-lg justify-center mb-8">
                         <h3>Already have an account?</h3>
@@ -102,10 +102,10 @@ export default function Register() {
     return (
         <div className="flex flex-col min-h-screen">
             <Navbar/>
-            <main>
-                <div className="max-w-lg mx-auto py-25">
+            <main className="flex-1 px-4 sm:px-6 py-12 mt-20">
+                <div className="w-full max-w-lg mx-auto">
                     <h1 className="text-3xl font-bold text-center">Create your Donor Account</h1>
-                    <div className="flex gap-1 text-lg justify-center  mb-6">
+                    <div className="flex gap-1 text-lg justify-center mb-6 sm:text-lg">
                         <h3>Already have an account?</h3>
                         <Link to={`/login/${role}`} className="text-[#921223] underline">Log in here</Link>
                     </div>
