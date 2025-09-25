@@ -42,14 +42,14 @@ export default function Home() {
           {/* Step 1 */}
           <article>
             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-red-100 flex items-center justify-center text-2xl font-bold text-black">1</div>
-            <h3 className="text-xl font-semibold text-black mb-2">Donor Registration</h3>
+            <h3 className="text-xl font-semibold text-black mb-2">For Donors</h3>
             <p className="text-[#757575] text-sm">Donors register their willingness to contribute, specifying the types of resources they can provide.</p>
           </article>
 
           {/* Step 2 */}
           <article>
             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-red-100 flex items-center justify-center text-2xl font-bold text-black">2</div>
-            <h3 className="text-xl font-semibold text-black mb-2">Hospital Needs Assessment</h3>
+            <h3 className="text-xl font-semibold text-black mb-2">For Hospitals</h3>
             <p className="text-[#757575] text-sm">Hospitals submit their urgent needs, detailing the required resources and the urgency of the situation.</p>
           </article>
 

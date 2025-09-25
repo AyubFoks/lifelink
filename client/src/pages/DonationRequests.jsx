@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function RequestRow({ data, onStatusChange }) {
+export default function DonationRequests({ data, onStatusChange }) {
   const { id, patientBloodGroup, facility, location, units, urgent, status } = data;
 
   return (
