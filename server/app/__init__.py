@@ -6,7 +6,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 from .config import Config
 
-
 db = SQLAlchemy()
 migrate = Migrate()
 bcrypt = Bcrypt()
@@ -21,11 +20,12 @@ def create_app(config_class=Config):
     # the browser will block during CORS checks.
     app.url_map.strict_slashes = False
 
-   
+    # Initialize extensions
     db.init_app(app)
     migrate.init_app(app, db)
     bcrypt.init_app(app)
     jwt.init_app(app)
+
     # Configure CORS to allow the frontend dev server and expose the Authorization header
     # This enables preflight (OPTIONS) requests to succeed and allows the browser to send
     # the Authorization header with requests.
@@ -42,19 +42,25 @@ def create_app(config_class=Config):
     # If additional per-response handling is required later, use
     # response.headers[...] = value to replace values rather than .add().
 
+    CORS(app)
 
-    with app.app_context():
-        from .routes.auth import auth_bp
-        from .routes.requests import requests_bp
-        from .routes.donations import donations_bp
-        from .routes.hospitals import hospitals_bp
-        from .routes.admin import admin_bp
 
-      
-        app.register_blueprint(auth_bp, url_prefix='/api/auth')
-        app.register_blueprint(requests_bp, url_prefix='/api/requests')
-        app.register_blueprint(donations_bp, url_prefix='/api/donations')
-        app.register_blueprint(hospitals_bp, url_prefix='/api/hospitals')
-        app.register_blueprint(admin_bp, url_prefix='/api/admin')
+    # Example root route
+    @app.route("/")
+    def home():
+        return "Welcome to LifeLink API!"
+
+    # Register blueprints
+    from .routes.auth import auth_bp
+    from .routes.requests import requests_bp
+    from .routes.donations import donations_bp
+    from .routes.hospitals import hospitals_bp
+    from .routes.admin import admin_bp
+
+    app.register_blueprint(auth_bp, url_prefix='/api/auth')
+    app.register_blueprint(requests_bp, url_prefix='/api/requests')
+    app.register_blueprint(donations_bp, url_prefix='/api/donations')
+    app.register_blueprint(hospitals_bp, url_prefix='/api/hospitals')
+    app.register_blueprint(admin_bp, url_prefix='/api/admin')
 
     return app
