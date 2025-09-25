@@ -1,5 +1,5 @@
 export default function HospitalDashboard() {
     return (
-        <div>Hospital dashboard</div>
+        <div>This is the hospital dashboard</div>
     )
 }
