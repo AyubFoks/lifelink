@@ -2,7 +2,7 @@ import Navbar from "./Navbar/Navbar";
 import Footer from "./Footer/Footer";
 import member1 from "../../assets/images/ayub.jpg";
 import member2 from "../../assets/images/dan.jpg";
-import member3 from "../../assets/images/purity.jpg";
+import member3 from "../../assets/images/purity2.jpg";
 import member4 from "../../assets/images/patricia.jpg";
 import member5 from "../../assets/images/tutu.jpg";
 
