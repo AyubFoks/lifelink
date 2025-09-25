@@ -2,6 +2,8 @@ import Navbar from "../../components/common/Navbar/Navbar";
 import Footer from "../../components/common/Footer/Footer";
 import DonationHistoryItem from "../../components/cards/DonationHistoryItem";
 import RequestCard from "../../components/cards/RequestCard";
+import DonorHistory from "../../components/cards/DonorHistory";
+import HospitalDonationHistory from "../../components/cards/HospitalDonationHistory";
 
 export default function TestPage() {
     const mockDonations = [
@@ -125,6 +127,18 @@ export default function TestPage() {
         },
     ];
 
+    const donorHistory = [
+        { date: "2023-01-15", hospital: "General Hospital", donationType: "Whole Blood" },
+        { date: "2023-05-20", hospital: "City Clinic", donationType: "Platelets" },
+        { date: "2023-09-10", hospital: "St. Mary's Hospital", donationType: "Plasma" },
+    ];
+
+    const hospitalDonationHistory = [
+        { date: "2023-01-15", donationType: "Whole Blood", donorName: "John Doe", bloodGroup: "A+" },
+        { date: "2023-01-16", donationType: "Platelets", donorName: "Jane Smith", bloodGroup: "B-" },
+        { date: "2023-01-17", donationType: "Plasma", donorName: "Peter Jones", bloodGroup: "O+" },
+    ];
+
     return (
         <div className="flex flex-col min-h-screen">
             <Navbar />
@@ -140,6 +154,8 @@ export default function TestPage() {
                         <RequestCard key={index} {...request} />
                     ))}
                 </div>
+                <DonorHistory donations={donorHistory} />
+                <HospitalDonationHistory donations={hospitalDonationHistory} />
             </main>
             <Footer />
         </div>

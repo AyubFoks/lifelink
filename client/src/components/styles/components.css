@@ -106,6 +106,16 @@
 }
 
 /* Donation History Item */
+.donor-history {
+    background-color: var(--white);
+    border: 1px solid var(--border);
+    max-width: 800px;
+    border-radius: 6px;
+    padding: 16px;
+    margin: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 .donation-history-item {
     display: flex;
     justify-content: space-between;
@@ -165,4 +175,79 @@
 .share-options a:hover,
 .share-options button:hover {
     background-color: var(--secondary);
+}
+
+/* Donor History */
+.donor-history {
+    background-color: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+    margin: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.donor-history h2 {
+    margin-bottom: 16px;
+    color: var(--primary);
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 8px;
+}
+
+.donor-history ul {
+    list-style: none;
+    padding: 0;
+}
+
+.donor-history li {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.donor-history li:last-child {
+    border-bottom: none;
+}
+
+.donor-history span {
+    color: var(--text);
+}
+
+/* Hospital Donation History */
+.hospital-donation-history {
+    background-color: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    max-width: 800px;
+    padding: 16px;
+    margin: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hospital-donation-history h2 {
+    margin-bottom: 16px;
+    color: var(--primary);
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 8px;
+}
+
+.hospital-donation-history ul {
+    list-style: none;
+    padding: 0;
+}
+
+.hospital-donation-history li {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.hospital-donation-history li:last-child {
+    border-bottom: none;
+}
+
+.hospital-donation-history span {
+    color: var(--text);
 }
