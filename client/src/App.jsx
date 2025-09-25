@@ -13,6 +13,7 @@ import RequestsPage from './pages/RequestsPage';
 import ScheduleAppointment from './pages/ScheduleAppointment';
 import HospitalRequests from './pages/Dashboard/HospitalRequests';
 import DonationRequestForm from './pages/DonationRequestForm';
+import Contact from "./pages/Contact/Contact";
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="/about" element={<About />} />
           <Route path="/login/:role" element={<Login />} />
           <Route path="/register/:role" element={<Register />} />  
+          <Route path="/contact" element={<Contact />} />
           {/* note to self to add protected routes */}
           <Route
             path="/dashboard/hospital"
