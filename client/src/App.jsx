@@ -8,6 +8,8 @@ import DonorDashboardPage from "./pages/Dashboard/DonorDashboardPage";
 import About from "./components/common/About";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import Contact from "./pages/Contact/Contact";
+import Testpage from "./pages/TestPage/Testpage";
+
 
 export default function App() {
   return (
@@ -19,6 +21,7 @@ export default function App() {
           <Route path="/login/:role" element={<Login />} />
           <Route path="/register/:role" element={<Register />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/testpage" element={<Testpage />} />
           {/* note to self to add protected routes */}
           <Route
             path="/dashboard/hospital"

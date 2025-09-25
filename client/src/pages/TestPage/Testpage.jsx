@@ -81,40 +81,32 @@ export default function TestPage() {
 
     const mockRequests = [
         {
-            logo: "/client/src/assets/images/general-hospital.png",
-            hospitalName: "General Hospital",
-            bloodTypes: ["A+", "O-"],
-            donationType: "Whole Blood",
-            location: "123 Main St, Anytown, USA",
-            status: "Urgent",
-            dateNeeded: "2024-03-01",
+            request: {
+                id: 1,
+                blood_type: "A+",
+                donation_type: "Whole Blood",
+                urgency: "Urgent",
+                date_needed: "2024-03-01",
+            },
+            hospital: {
+                id: 1,
+                name: "General Hospital",
+                address: "123 Main St, Anytown, USA",
+            },
         },
         {
-            logo: "/client/src/assets/images/general-hospital.png",
-            hospitalName: "City Clinic",
-            bloodTypes: ["B+"],
-            donationType: "Platelets",
-            location: "456 Oak Ave, Anytown, USA",
-            status: "Open",
-            dateNeeded: "2024-03-05",
-        },
-        {
-            logo: "/client/src/assets/images/general-hospital.png",
-            hospitalName: "St. Mary's Hospital",
-            bloodTypes: ["AB-", "O+"],
-            donationType: "Plasma",
-            location: "789 Pine Ln, Anytown, USA",
-            status: "Fulfilled",
-            dateNeeded: "2024-02-20",
-        },
-        {
-            logo: "/client/src/assets/images/general-hospital.png",
-            hospitalName: "County Hospital",
-            bloodTypes: ["A-", "B-"],
-            donationType: "Double Red Cells",
-            location: "101 Elm St, Anytown, USA",
-            status: "Urgent",
-            dateNeeded: "2024-02-28",
+            request: {
+                id: 2,
+                blood_type: "B+",
+                donation_type: "Platelets",
+                urgency: "Open",
+                date_needed: "2024-03-05",
+            },
+            hospital: {
+                id: 2,
+                name: "City Clinic",
+                address: "456 Oak Ave, Anytown, USA",
+            },
         },
     ];
 
@@ -141,8 +133,8 @@ export default function TestPage() {
                     ))}
                 </div>
                 <div style={{ display: "flex", flexWrap: "wrap" }}>
-                    {mockRequests.map((request, index) => (
-                        <RequestCard key={index} {...request} />
+                    {mockRequests.map((data, index) => (
+                        <RequestCard key={index} request={data.request} hospital={data.hospital} />
                     ))}
                 </div>
                 <DonorHistory donations={donorHistory} />
