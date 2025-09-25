@@ -4,6 +4,12 @@ import Home from "./pages/Home/Home";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import HospitalDashboard from "./pages/Dashboard/HospitalDashboard";
+import DonorDashboardPage from "./pages/Dashboard/DonorDashboardPage";
+import RequestsPage from './pages/RequestsPage';
+import DonationRequestForm from "./pages/DonationRequestForm";
+import DonationRequests from "./pages/DonationRequests";
+
+
 import About from "./components/common/About";
 
 export default function App() {
@@ -16,6 +22,10 @@ export default function App() {
           <Route path="/login/:role" element={<Login />} />
           <Route path="/register/:role" element={<Register />} />  
           <Route path="/dashboard/hospital" element={<HospitalDashboard />} />
+          <Route path="/dashboard/donor" element={<DonorDashboardPage />} />
+          <Route path="/requests" element={<RequestsPage />} />
+          <Route path="/request" element={<DonationRequestForm />} />
+          <Route path="/requests" element={<DonationRequests />} />
           {/* note to self to add protected routes */}
         </Routes>
       </main>

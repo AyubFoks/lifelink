@@ -1,109 +1,145 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDonor } from '../../context/DonorContext';
-import LifelinkLogo from '../../assets/logos/lifelink-full-logo.svg';
-import { Card } from '../../components/ui/Card';
-import { Button } from '../../components/ui/Button';
-import { Input } from '../../components/ui/Input';
+import { useAuth } from '../../context/AuthContext';
 
 export default function DonorDashboardPage() {
-  const { donor, setNextAppointment, recordDonation } = useDonor();
-  const [form, setForm] = useState({ date: '', time: '', location: '' });
-  const [message, setMessage] = useState('');
+  const { user } = useAuth();                       // ← name, bloodGroup from login/register
+  const [requests, setRequests]   = useState(initialRequests);
+  const [totalDonations, setTotal] = useState(() => Number(localStorage.getItem('lifelink-total')) || 0);
+  const [livesSaved, setLives]     = useState(() => Number(localStorage.getItem('lifelink-lives')) || 0);
+  const [nextAppt, setNextAppt]    = useState(() => localStorage.getItem('lifelink-nextAppt') || null);
 
-  if (!donor) {
-    return (
-      <div className="dashboard-center">
-        <img src={LifelinkLogo} alt="LifeLink Logo" className="logo" />
-        <p>No donor profile found.</p>
-        <Link to="/register">
-          <Button variant="primary">Register now</Button>
-        </Link>
-      </div>
+  /* -------- persist stats -------- */
+  useEffect(() => {
+    localStorage.setItem('lifelink-total', totalDonations);
+    localStorage.setItem('lifelink-lives', livesSaved);
+    if (nextAppt) localStorage.setItem('lifelink-nextAppt', nextAppt);
+  }, [totalDonations, livesSaved, nextAppt]);
+
+  /* -------- accept → book appointment -------- */
+  const acceptRequest = (id, hospital) => {
+    const newDate = new Date();
+    newDate.setDate(newDate.getDate() + 7); // 7 days from now
+    const formatted = newDate.toLocaleDateString('en-CA'); // YYYY-MM-DD
+    setNextAppt(`${formatted} - 10:00 AM at ${hospital}`);
+    setRequests(reqs =>
+      reqs.map(r => (r.id === id ? { ...r, status: 'Accepted' } : r))
     );
-  }
-
-  const handleChange = (e) => setForm((s) => ({ ...s, [e.target.name]: e.target.value }));
-
-  const handleSchedule = (e) => {
-    e.preventDefault();
-    if (!form.date || !form.time) {
-      setMessage('Please select date and time.');
-      return;
-    }
-    const scheduledAt = new Date(`${form.date}T${form.time}`);
-    if (scheduledAt <= new Date()) {
-      setMessage('Choose a future date/time.');
-      return;
-    }
-    const appt = {
-      date: form.date,
-      time: form.time,
-      location: form.location || 'Your chosen clinic',
-      scheduledAt: scheduledAt.toISOString(),
-    };
-    setNextAppointment(appt);
-    setMessage('Appointment scheduled!');
-    setForm({ date: '', time: '', location: '' });
   };
 
-  const handleCompleteDonation = () => {
-    recordDonation({ count: 1 });
-    setMessage('Donation recorded. Thank you!');
+  /* -------- mark fulfilled → update impact -------- */
+  const markFulfilled = (id, units) => {
+    setRequests(reqs =>
+      reqs.map(r => (r.id === id ? { ...r, status: 'Fulfilled' } : r))
+    );
+    setTotal(prev => prev + units);
+    setLives(prev => prev + units * 3); // 1 unit ≈ 3 lives
+  };
+
+  /* -------- status badge colours -------- */
+  const badge = (s) => {
+    switch (s) {
+      case 'Fulfilled': return 'bg-green-100 text-green-700';
+      case 'Accepted':  return 'bg-blue-100 text-blue-700';
+      case 'Pending':   return 'bg-yellow-100 text-yellow-700';
+      default:          return 'bg-gray-100 text-gray-700';
+    }
   };
 
   return (
-    <div className="dashboard">
-      <div className="logo-container">
-        <img src={LifelinkLogo} alt="LifeLink Logo" className="logo" />
+    <div className="max-w-6xl mx-auto px-6 py-10">
+
+      {/* -------- WELCOME BANNER -------- */}
+      <div className="bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-2xl p-8 mb-8">
+        <h1 className="text-3xl font-bold">Welcome, {user?.name || 'Donor'}!</h1>
+        <p className="mt-2 text-lg">Ready to make a difference today?</p>
       </div>
 
-      <div className="banner">
-        <h1>Welcome, {donor.name}!</h1>
-        <p>Ready to make a difference today?</p>
-      </div>
-
-      <div className="stats-grid">
-        <Card><p>Total Donations</p><h3>{donor.totalDonations}</h3></Card>
-        <Card><p>Lives Saved</p><h3>{donor.livesSaved}</h3></Card>
-        <Card><p>Blood Type</p><h3>{donor.bloodType}</h3></Card>
-      </div>
-
-      <Card>
-        <h2>Next Appointment</h2>
-        {donor.nextAppointment ? (
-          <div className="appointment-display">
-            <div>
-              <p>{new Date(donor.nextAppointment.scheduledAt).toLocaleString()}</p>
-              <p>{donor.nextAppointment.location}</p>
-            </div>
-            <div>
-              <Button variant="primary" onClick={handleCompleteDonation}>Mark Donation Complete</Button>
-              <Button variant="secondary" onClick={() => setNextAppointment(null)}>Cancel</Button>
-            </div>
-          </div>
-        ) : (
-          <form onSubmit={handleSchedule} className="appointment-form">
-            <Input type="date" name="date" value={form.date} onChange={handleChange} />
-            <Input type="time" name="time" value={form.time} onChange={handleChange} />
-            <Input name="location" value={form.location} onChange={handleChange} placeholder="Location" />
-            <Button type="submit" variant="primary">Schedule Appointment</Button>
-            <Link to="/requests">
-              <Button variant="secondary">Browse Requests</Button>
-            </Link>
-          </form>
-        )}
-        {message && <p className="status-message">{message}</p>}
-      </Card>
-
-      <Card>
-        <h2>Quick Actions</h2>
-        <div className="actions">
-          <Link to="/requests"><Button variant="secondary">Browse Requests</Button></Link>
-          <Button variant="secondary">Update Profile</Button>
-          <Button variant="secondary">Donation History</Button>
+      {/* -------- STATS CARDS -------- */}
+      <div className="grid md:grid-cols-3 gap-6 mb-8">
+        <div className="bg-white rounded-2xl shadow p-6 text-center">
+          <p className="text-gray-500 text-sm">Total Donations</p>
+          <p className="text-3xl font-bold text-black">{totalDonations}</p>
         </div>
-      </Card>
+        <div className="bg-white rounded-2xl shadow p-6 text-center">
+          <p className="text-gray-500 text-sm">Lives Saved</p>
+          <p className="text-3xl font-bold text-black">{livesSaved}</p>
+        </div>
+        <div className="bg-white rounded-2xl shadow p-6 text-center">
+          <p className="text-gray-500 text-sm">Blood Type</p>
+          <p className="text-3xl font-bold text-black">{user?.bloodGroup || '—'}</p>
+        </div>
+      </div>
+
+      {/* -------- NEXT APPOINTMENT -------- */}
+      {nextAppt && (
+        <div className="bg-white rounded-2xl shadow p-6 mb-8">
+          <h2 className="text-xl font-semibold text-black mb-2">Next Appointment</h2>
+          <p className="text-gray-700">{nextAppt}</p>
+          <Link to="/requests" className="inline-block mt-3 text-red-600 hover:underline">View Details</Link>
+        </div>
+      )}
+
+      {/* -------- CURRENT REQUESTS -------- */}
+      <section className="bg-white rounded-2xl shadow p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-semibold text-black">Recent Requests</h2>
+          <Link to="/requests" className="text-sm text-red-600 hover:underline">See all →</Link>
+        </div>
+
+        <div className="overflow-auto">
+          <table className="w-full text-left">
+            <thead>
+              <tr className="border-b border-gray-200">
+                <th className="pb-2 text-sm font-medium text-gray-600">ID</th>
+                <th className="pb-2 text-sm font-medium text-gray-600">Resource</th>
+                <th className="pb-2 text-sm font-medium text-gray-600">Units</th>
+                <th className="pb-2 text-sm font-medium text-gray-600">Hospital</th>
+                <th className="pb-2 text-sm font-medium text-gray-600">Status</th>
+                <th className="pb-2 text-sm font-medium text-gray-600">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {requests.map((req) => (
+                <tr key={req.id} className="border-b border-gray-100">
+                  <td className="py-3 text-sm text-black">{req.id}</td>
+                  <td className="py-3 text-sm text-black">{req.resource}</td>
+                  <td className="py-3 text-sm text-black">{req.units}</td>
+                  <td className="py-3 text-sm text-black">{req.hospital}</td>
+                  <td className="py-3">
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${badge(req.status)}`}>{req.status}</span>
+                  </td>
+                  <td className="py-3">
+                    {req.status === 'Pending' && (
+                      <button
+                        onClick={() => acceptRequest(req.id, req.hospital)}
+                        className="text-sm bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition"
+                      >
+                        Accept
+                      </button>
+                    )}
+                    {req.status === 'Accepted' && (
+                      <button
+                        onClick={() => markFulfilled(req.id, req.units)}
+                        className="text-sm bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 transition"
+                      >
+                        Mark Fulfilled
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      {/* -------- QUICK ACTIONS -------- */}
+      <section className="mt-8 flex flex-wrap gap-4">
+        <Link to="/requests" className="bg-gray-100 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-200 transition">Browse Requests</Link>
+        <button className="bg-gray-100 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-200 transition">Update Profile</button>
+        <button className="bg-gray-100 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-200 transition">Donation History</button>
+      </section>
     </div>
   );
 }
