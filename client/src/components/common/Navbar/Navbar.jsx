@@ -13,7 +13,7 @@ export default function Navbar() {
     <header>
       <nav className="bg-[#FDFBF9] px-4 py-3 shadow-md fixed top-0 left-0 right-0 z-50">
         {/* Top bar: Logo + Hamburger */}
-        <div className="flex justify-between items-center">
+        <div className="flex max-w-7xl mx-auto px-6 md:px-12 justify-between items-center">
           <Link to="/">
             <img src={logo} className="w-auto h-[40px]" alt="LifeLink logo" />
           </Link>
@@ -29,7 +29,7 @@ export default function Navbar() {
           </button>
 
           {/* Desktop Links */}
-          <div className="hidden md:flex gap-6 ml-6" style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.3)" }}>
+          <div className="hidden md:flex gap-20 ml-6" style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.3)" }}>
             <NavLink to="/">Home</NavLink>
             <NavLink to="/about">About</NavLink>
             <NavLink to="/contact">Contact</NavLink>

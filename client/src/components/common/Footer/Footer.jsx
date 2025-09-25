@@ -3,7 +3,7 @@ import logo from '../../../assets/logos/LifeLink-Logo.svg'
 export default function Footer() {
   return (
     <footer className="bg-[#FDFBF9] text-[#403f3f] border-t border-[#dcdcdc]">
-  <div className="max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row justify-between items-center md:items-start gap-6 md:gap-10">
+  <div className="max-w-7xl mx-auto px-4 py-8 flex flex-col md:flex-row justify-between items-center md:items-start gap-6 md:gap-10">
     
     {/* Logo */}
     <div className="flex justify-center w-full md:w-auto">
