@@ -5,11 +5,11 @@ function DonationHistoryItem({ donation }) {
     return (
         <div className="donation-history-item">
             <div className="donation-history-item__header">
-                <span className="donation-history-item__date">
-                    {new Date(donation.date).toLocaleDateString()}
-                </span>
                 <span className="donation-history-item__status">
                     {donation.status}
+                </span>
+                <span className="donation-history-item__date">
+                    {new Date(donation.date).toLocaleDateString()}
                 </span>
             </div>
             <div className="donation-history-item__details">
