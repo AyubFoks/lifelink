@@ -8,7 +8,7 @@ name = "pypi"
 
 # Specifies the Python version required for this project.
 [requires]
-python_version = "3.11" # You can adjust this to your specific Python version, e.g., "3.10"
+python_version = "3.8.13" 
 
 # Specifies the main packages required for the application to run.
 [packages]
