@@ -2,7 +2,7 @@
 @import "tailwindcss";
 
 body {
-  font-family: 'Outfit', system-ui, sans-serif;
+  font-family: 'Outfit', sans-serif;
   background: #f6f8fa;
   margin: 0;
 }
