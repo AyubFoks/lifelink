@@ -47,17 +47,17 @@ export default function Register() {
                            <Form className="space-y-4 mt-20">
                                 <div>
                                   <label className="block mb-2">Hospital Name</label>
-                                  <Field name="hospitalName" className="w-full p-2 border rounded" placeholder="hospital name"/>
+                                  <Field name="hospitalName" className="w-full p-2 border rounded" placeholder="hospital name" autoComplete="name"/>
                                   <ErrorMessage name="hospitalName" component="div" className="text-red-600" />
                                 </div>
                                 <div>
                                   <label className="block mb-2">Admin Name</label>
-                                  <Field name="adminName" className="w-full p-2 border rounded" placeholder="admin full name"/>
+                                  <Field name="adminName" className="w-full p-2 border rounded" placeholder="admin full name" autoComplete="name"/>
                                   <ErrorMessage name="adminName" component="div" className="text-red-600" />
                                 </div>
                                 <div>
                                   <label className="block mb-2">Admin Email</label>
-                                  <Field name="adminEmail" type="email" className="w-full p-2 border rounded" placeholder="work email"/>
+                                  <Field name="adminEmail" type="email" className="w-full p-2 border rounded" placeholder="work email"autoComplete="email"/>
                                   <ErrorMessage name="adminEmail" component="div" className="text-red-600" />
                                 </div>
                                 <div>
@@ -67,12 +67,12 @@ export default function Register() {
                                 </div>
                                 <div>
                                   <label className="block mb-2">Password</label>
-                                  <Field name="password" type="password" className="w-full p-2 border rounded" placeholder="password"/>
+                                  <Field name="password" type="password" className="w-full p-2 border rounded" placeholder="password" autoComplete="new-password" />
                                   <ErrorMessage name="password" component="div" className="text-red-600" />
                                 </div>
                                 <div>
                                   <label className="block mb-2">Confirm Password</label>
-                                  <Field name="confirmPassword" type="password" className="w-full p-2 border rounded" placeholder="password"/>
+                                  <Field name="confirmPassword" type="password" className="w-full p-2 border rounded" placeholder="password" autoComplete="new-password" />
                                   <ErrorMessage name="confirmPassword" component="div" className="text-red-600" />
                                 </div>
                                 <Button type="submit" className="w-full text-white mt-6">
@@ -123,22 +123,22 @@ export default function Register() {
                             <Form className="space-y-4  mt-20">
                                 <div>
                                     <label className="block mb-2">Full Name</label>
-                                    <Field name="name" className="w-full p-2 border rounded" placeholder="full name"/>
+                                    <Field name="name" className="w-full p-2 border rounded" placeholder="full name" autoComplete="name"/>
                                     <ErrorMessage name="name" component="div" className="text-red-600" />
                                 </div>
                                 <div>
                                     <label className="block mb-2">Email</label>
-                                    <Field name="email" type="email" className="w-full p-2 border rounded" placeholder="email address"/>
+                                    <Field name="email" type="email" className="w-full p-2 border rounded" placeholder="email address" autoComplete="email"/>
                                     <ErrorMessage name="email" component="div" className="text-red-600" />
                                 </div>
                                 <div>
                                     <label className="block mb-2">Password</label>
-                                    <Field name="password" type="password" className="w-full p-2 border rounded" placeholder="password"/>
+                                    <Field name="password" type="password" className="w-full p-2 border rounded" placeholder="password" autoComplete="new-password" />
                                     <ErrorMessage name="password" component="div" className="text-red-600" />
                                 </div>
                                 <div>
                                     <label className="block mb-2">Confirm Password</label>
-                                    <Field name="confirmPassword" type="password" className="w-full p-2 border rounded" placeholder="password"/>
+                                    <Field name="confirmPassword" type="password" className="w-full p-2 border rounded" placeholder="password" autoComplete="new-password"/>
                                     <ErrorMessage name="confirmPassword" component="div" className="text-red-600" />
                                 </div>
                                 <div className="flex gap-2 w-full justify-between">
