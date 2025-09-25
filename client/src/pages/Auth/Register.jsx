@@ -42,36 +42,36 @@ export default function Register() {
                         {({ isSubmitting }) => (
                            <Form className="space-y-4">
                                 <div>
-                                  <label>Hospital Name</label>
-                                  <Field name="hospitalName" className="w-full p-3 border rounded" />
+                                  <label className="block mb-2">Hospital Name</label>
+                                  <Field name="hospitalName" className="w-full p-2 border rounded" />
                                   <ErrorMessage name="hospitalName" component="div" className="text-red-600" />
                                 </div>
                                 <div>
-                                  <label>Admin Name</label>
-                                  <Field name="adminName" className="w-full p-3 border rounded" />
+                                  <label className="block mb-2">Admin Name</label>
+                                  <Field name="adminName" className="w-full p-2 border rounded" />
                                   <ErrorMessage name="adminName" component="div" className="text-red-600" />
                                 </div>
                                 <div>
-                                  <label>Admin Email</label>
-                                  <Field name="adminEmail" type="email" className="w-full p-3 border rounded" />
+                                  <label className="block mb-2">Admin Email</label>
+                                  <Field name="adminEmail" type="email" className="w-full p-2 border rounded" />
                                   <ErrorMessage name="adminEmail" component="div" className="text-red-600" />
                                 </div>
                                 <div>
-                                  <label>Hospital Location</label>
-                                  <Field name="location" className="w-full p-3 border rounded" />
+                                  <label className="block mb-2">Hospital Location</label>
+                                  <Field name="location" className="w-full p-2 border rounded" />
                                   <ErrorMessage name="location" component="div" className="text-red-600" />
                                 </div>
                                 <div>
-                                  <label>Password</label>
-                                  <Field name="password" type="password" className="w-full p-3 border rounded" />
+                                  <label className="block mb-2">Password</label>
+                                  <Field name="password" type="password" className="w-full p-2 border rounded" />
                                   <ErrorMessage name="password" component="div" className="text-red-600" />
                                 </div>
                                 <div>
-                                  <label>Confirm Password</label>
-                                  <Field name="confirmPassword" type="password" className="w-full p-3 border rounded" />
+                                  <label className="block mb-2">Confirm Password</label>
+                                  <Field name="confirmPassword" type="password" className="w-full p-2 border rounded" />
                                   <ErrorMessage name="confirmPassword" component="div" className="text-red-600" />
                                 </div>
-                                <Button type="submit" className="w-full">
+                                <Button type="submit" className="w-full text-white">
                                   {isSubmitting ? "Registering..." : "Register"}
                                 </Button>
                             </Form>
@@ -114,33 +114,33 @@ export default function Register() {
                         {({ isSubmitting }) => (
                             <Form className="space-y-4">
                                 <div>
-                                    <label>Full Name</label>
-                                    <Field name="name" className="w-full p-3 border rounded" />
+                                    <label className="block mb-2">Full Name</label>
+                                    <Field name="name" className="w-full p-2 border rounded" />
                                     <ErrorMessage name="name" component="div" className="text-red-600" />
                                 </div>
                                 <div>
-                                    <label>Email</label>
-                                    <Field name="email" type="email" className="w-full p-3 border rounded" />
+                                    <label className="block mb-2">Email</label>
+                                    <Field name="email" type="email" className="w-full p-2 border rounded" />
                                     <ErrorMessage name="email" component="div" className="text-red-600" />
                                 </div>
                                 <div>
-                                    <label>Address</label>
-                                    <Field name="address" className="w-full p-3 border rounded" />
+                                    <label className="block mb-2">Address</label>
+                                    <Field name="address" className="w-full p-2 border rounded" />
                                     <ErrorMessage name="address" component="div" className="text-red-600" />
                                 </div>
                                 <div>
-                                    <label>Password</label>
-                                    <Field name="password" type="password" className="w-full p-3 border rounded" />
+                                    <label className="block mb-2">Password</label>
+                                    <Field name="password" type="password" className="w-full p-2 border rounded" />
                                     <ErrorMessage name="password" component="div" className="text-red-600" />
                                 </div>
                                 <div>
-                                    <label>Confirm Password</label>
-                                    <Field name="confirmPassword" type="password" className="w-full p-3 border rounded" />
+                                    <label className="block mb-2">Confirm Password</label>
+                                    <Field name="confirmPassword" type="password" className="w-full p-2 border rounded" />
                                     <ErrorMessage name="confirmPassword" component="div" className="text-red-600" />
                                 </div>
                                 <div>
-                                    <label>Blood Group</label>
-                                    <Field as="select" name="bloodGroup" className="w-full p-3 border rounded">
+                                    <label className="block mb-2">Blood Group</label>
+                                    <Field as="select" name="bloodGroup" className="w-full p-2 border rounded">
                                         <option>A+</option><option>A-</option>
                                         <option>B+</option><option>B-</option>
                                         <option>AB+</option><option>AB-</option>
@@ -148,7 +148,7 @@ export default function Register() {
                                     </Field>
                                     <ErrorMessage name="bloodGroup" component="div" className="text-red-600" />
                                 </div>
-                                <Button type="submit" className="w-full">
+                                <Button type="submit" className="w-full text-white">
                                     {isSubmitting ? "Registering..." : "Register"}
                                 </Button>
                             </Form>
