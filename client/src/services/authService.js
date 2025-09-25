@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE || "http://localhost:5000/api",
+  // Read VITE_API_URL (preferred) for consistency with Vercel/Vite env naming.
+  baseURL: import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE || "https://lifelink-backend-97rb.onrender.com/api",
 });
 
 const setToken = (token) => {
