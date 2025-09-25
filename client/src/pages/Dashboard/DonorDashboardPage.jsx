@@ -73,7 +73,7 @@ export default function DonorDashboardPage() {
   //   // <div className="dashboard">
   //   //   <div className="logo-container">
   //   //     <img src={LifelinkLogo} alt="LifeLink Logo" className="logo" />
-  //   //   </div>
+  //   //   //   </div>
 
   //   //   <div className="banner">
   //   //     <h1>Welcome, {donor.name}!</h1>

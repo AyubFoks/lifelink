@@ -7,6 +7,7 @@ import HospitalDashboard from "./pages/Dashboard/HospitalDashboard";
 import DonorDashboardPage from "./pages/Dashboard/DonorDashboardPage";
 import About from "./components/common/About";
 import ProtectedRoute from "./components/common/ProtectedRoute";
+import Contact from "./pages/Contact/Contact";
 
 export default function App() {
   return (
@@ -16,7 +17,8 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/login/:role" element={<Login />} />
-          <Route path="/register/:role" element={<Register />} />  
+          <Route path="/register/:role" element={<Register />} />
+          <Route path="/contact" element={<Contact />} />
           {/* note to self to add protected routes */}
           <Route
             path="/dashboard/hospital"
