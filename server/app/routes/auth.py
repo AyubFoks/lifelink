@@ -20,7 +20,8 @@ def register():
         blood_type=data['bloodType'],
         location=data['location']
     )
-    new_user.set_password(data['password'])
+    
+    new_user.password = data['password']
     db.session.add(new_user)
     db.session.commit()
     return jsonify({'message': 'Donor registered successfully'}), 201
@@ -48,7 +49,8 @@ def register_hospital():
         role='hospital_admin',
         hospital_id=new_hospital.id
     )
-    new_admin.set_password(data['password'])
+    
+    new_admin.password = data['password']
     db.session.add(new_admin)
     db.session.commit()
     
