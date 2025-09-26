@@ -14,7 +14,7 @@ bcrypt = Bcrypt()
 jwt = JWTManager()
 
 def create_app(config_class=Config):
-    """Creates and configures an instance of the Flask application."""
+    """Creates and inits an instance of the Flask application."""
     app = Flask(__name__)
     app.config.from_object(config_class)
 
@@ -26,24 +26,15 @@ def create_app(config_class=Config):
     bcrypt.init_app(app)
     jwt.init_app(app)
 
-   
-    frontend_url = os.environ.get('FRONTEND_URL')
-    allowed_origins = ["http://localhost:5173"]
-    if frontend_url:
-        allowed_origins.append(frontend_url)
 
-    CORS(app,
-         resources={r"/api/*": {"origins": allowed_origins}},
-         supports_credentials=True,
-         expose_headers=["Authorization"],
-         allow_headers=["Content-Type", "Authorization"])
+    CORS(app, supports_credentials=True)
 
-    
+
     @app.route("/")
     def home():
         return "Welcome to LifeLink API!"
 
-   
+  
     from .routes.auth import auth_bp
     from .routes.requests import requests_bp
     from .routes.donations import donations_bp
