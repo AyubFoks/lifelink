@@ -7,6 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 from .config import Config
 
+
 db = SQLAlchemy()
 migrate = Migrate()
 bcrypt = Bcrypt()
@@ -16,10 +17,11 @@ def create_app(config_class=Config):
     """Creates and configures an instance of the Flask application."""
     app = Flask(__name__)
     app.config.from_object(config_class)
+
     
     app.url_map.strict_slashes = False
 
-   
+    
     db.init_app(app)
     migrate.init_app(app, db)
     bcrypt.init_app(app)
@@ -30,7 +32,7 @@ def create_app(config_class=Config):
     allowed_origins = ["http://localhost:5173"]
     if frontend_url:
         allowed_origins.append(frontend_url)
-    
+
     CORS(app,
          resources={r"/api/*": {"origins": allowed_origins}},
          supports_credentials=True,
@@ -42,7 +44,7 @@ def create_app(config_class=Config):
     def home():
         return "Welcome to LifeLink API!"
 
-  
+    
     from .routes.auth import auth_bp
     from .routes.requests import requests_bp
     from .routes.donations import donations_bp
