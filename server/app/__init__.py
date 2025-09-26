@@ -18,7 +18,6 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
-    
     app.url_map.strict_slashes = False
 
     
@@ -27,7 +26,7 @@ def create_app(config_class=Config):
     bcrypt.init_app(app)
     jwt.init_app(app)
 
-    
+   
     frontend_url = os.environ.get('FRONTEND_URL')
     allowed_origins = ["http://localhost:5173"]
     if frontend_url:
@@ -44,7 +43,7 @@ def create_app(config_class=Config):
     def home():
         return "Welcome to LifeLink API!"
 
-    
+   
     from .routes.auth import auth_bp
     from .routes.requests import requests_bp
     from .routes.donations import donations_bp
