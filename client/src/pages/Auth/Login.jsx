@@ -9,25 +9,25 @@ import React, { useState } from "react";
 import SuccessScreen from "../../components/ui/SuccessScreen";
 
 export default function Login() {
-  const { role: rawRole } = useParams(); // 'donor', 'hospital' or backend 'hospital_admin'
-  // normalize role param: accept plural forms like 'hospitals' and backend names like 'hospital_admin'
+  const { role: rawRole } = useParams(); 
+  
   const role = (rawRole || '').toLowerCase().replace(/s$/, '');
   const { login } = useAuth();
   const nav = useNavigate();
   const [showSuccess, setShowSuccess] = useState(false);
-  const [loggedInUser, setLoggedInUser] = useState(null); // State to hold the logged-in user's data
+  const [loggedInUser, setLoggedInUser] = useState(null); 
 
   const initial = { emailOrUsername: "", password: "" };
 
   const handleSubmit = async (values, { setSubmitting, setFieldError }) => {
-    // Support both frontend-friendly 'hospital' and backend 'hospital_admin' values
+   
   const urlRoleIsHospital = role === "hospital" || role === "hospital_admin";
 
-    // If the identifier looks like an email (contains @), send it as email; otherwise send as hospitalName for hospital logins.
+    
     const identifier = values.emailOrUsername.trim();
     const looksLikeEmail = identifier.includes("@");
 
-    // Build payload mapping according to what the user entered and the login page type
+    
     const payload = looksLikeEmail || !urlRoleIsHospital
       ? {
           email: identifier,
@@ -47,11 +47,11 @@ export default function Login() {
         return;
       }
 
-      // Set the user data and show the success screen
+     
       setLoggedInUser(res.user);
       setShowSuccess(true);
 
-      // Route based on the returned user role (more reliable than the URL param)
+      
       const returnedRole = res.user?.role;
       setTimeout(() => {
         if (returnedRole === "hospital_admin") nav("/dashboard/hospital");
@@ -60,7 +60,7 @@ export default function Login() {
       }, 1000);
     } catch (error) {
       setSubmitting(false);
-      // Display a form-level error
+      
       setFieldError("emailOrUsername", error?.message || "Login failed");
     }
   };

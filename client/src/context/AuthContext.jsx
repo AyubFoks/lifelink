@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
         try {
           const profileData = await authService.getProfile();
           if (profileData && !profileData.error) {
-              // Normalize role strings if backend or older clients use alternate names
+              
               if (profileData.role === 'hospital') profileData.role = 'hospital_admin';
               setUser(profileData);
               setIsAuthenticated(true);

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  // Read VITE_API_URL (preferred) for consistency with Vercel/Vite env naming.
+  
   baseURL: import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE || "https://lifelink-backend-97rb.onrender.com/api",
 });
 
@@ -40,7 +40,7 @@ const login = async (payload) => {
   }
 };
 
-// This function was missing
+
 const getProfile = async () => {
   try {
     const { data } = await API.get("/auth/profile");
@@ -50,7 +50,7 @@ const getProfile = async () => {
   }
 };
 
-// Generic helpers for other API calls that require the auth header
+
 const get = async (path) => {
   try {
     const { data } = await API.get(path);
@@ -83,7 +83,7 @@ export default {
   registerHospital,
   login,
   setToken,
-  getProfile, // Export the new function
+  getProfile, 
   get,
   post,
   patch,

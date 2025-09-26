@@ -1,4 +1,3 @@
-// Mock data, replace with API calls
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { useNavigate, Link } from "react-router-dom";
@@ -7,7 +6,7 @@ import Footer from "../../components/common/Footer/Footer.jsx";
 import Button from "../../components/ui/Button.jsx";
 import authService from "../../services/authService";
 
-// Mock data, replace with API calls
+
 const inventoryData = [
   { resource: "Blood Type A+", qty: 15, status: "Available", updated: "2025-09-19" },
   { resource: "Blood Type O-", qty: 3, status: "Low", updated: "2025-09-24" },

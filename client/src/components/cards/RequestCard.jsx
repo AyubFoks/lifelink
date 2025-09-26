@@ -26,7 +26,7 @@ const RequestCard = ({
     onDecline,
     onShare,
 }) => {
-    // Determine the label to show in the top-right: prefer urgency, fall back to status
+    
     const label = (urgency || status || '').toString();
     const labelClass = label.toLowerCase();
 

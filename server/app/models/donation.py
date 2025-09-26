@@ -16,7 +16,7 @@ class Donation(db.Model, SerializerMixin):
     donation_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     status = db.Column(db.String(50), nullable=False, default='Scheduled')
 
-    # Optional appointment date/time set when donor schedules an appointment
+    
     appointment_date = db.Column(db.DateTime, nullable=True)
 
     donor_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)

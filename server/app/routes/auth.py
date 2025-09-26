@@ -61,20 +61,20 @@ def login():
         return jsonify({'message': 'Missing required fields'}), 400
 
     password = data.get('password')
-    # This identifier can be either an email or a hospital name
+    
     login_identifier = data.get('email') or data.get('hospitalName')
 
     if not login_identifier:
         return jsonify({'message': 'Missing email or hospital name'}), 400
 
-    # First, try to find a user directly by email
+    
     user = User.query.filter_by(email=login_identifier).first()
 
-    # If no user is found by email, check if the identifier is a hospital name
+    
     if not user:
         hospital = Hospital.query.filter_by(name=login_identifier).first()
         if hospital:
-            # Find the admin associated with this hospital
+           
             user = User.query.filter_by(hospital_id=hospital.id, role='hospital_admin').first()
 
     if user and user.verify_password(password):
@@ -99,11 +99,11 @@ def update_profile():
     current_user_id = get_jwt_identity()
     user = User.query.get_or_404(current_user_id)
     data = request.get_json() or {}
-    # Allowed fields to update
+   
     allowed = ['full_name', 'blood_type', 'location', 'email']
     changed = False
     if 'email' in data and data['email'] != user.email:
-        # check uniqueness
+        
         if User.query.filter_by(email=data['email']).first():
             return jsonify({'message': 'Email already in use'}), 409
         user.email = data['email']

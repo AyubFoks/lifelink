@@ -1,4 +1,3 @@
-// client/src/utils/requestStore.js
 export let globalRequests = [
   { id: 'REQ-01-001', resource: 'Blood Type O-', units: 2, status: 'Pending', hospital: 'City Hospital Centre', location: '123 Elm Street, Nairobi', urgent: true },
   { id: 'REQ-01-002', resource: 'Plasma', units: 1, status: 'Pending', hospital: 'National Hospital', location: '7981 Fila Street, Nairobi', urgent: false },

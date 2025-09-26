@@ -19,15 +19,14 @@ def create_donation():
     data = request.get_json()
     if not data or not data.get('request_id'):
         return jsonify({'message': 'Request ID is required'}), 400
-    # Ensure the request exists and is still available (Pending)
+    
     req = BloodRequest.query.get(data['request_id'])
     if not req:
         return jsonify({'message': 'Blood request not found'}), 404
     if req.status != 'Pending':
         return jsonify({'message': 'This request is no longer available'}), 400
 
-    # Create a donation with status 'Pending' (donor has accepted but not yet scheduled)
-    # and mark the request as 'Reserved' so other donors won't pick it.
+    
     new_donation = Donation(donor_id=donor_id, request_id=req.id, status='Pending')
     req.status = 'Reserved'
     db.session.add(new_donation)
@@ -58,7 +57,7 @@ def update_donation(donation_id):
         return jsonify({'message': 'Invalid appointment_date format; use ISO format'}), 400
     donation.appointment_date = dt
     donation.status = 'Scheduled'
-    # also mark the linked request as Scheduled
+    
     donation.request.status = 'Scheduled'
     db.session.add(donation)
     db.session.add(donation.request)
@@ -98,13 +97,13 @@ def fulfill_donation(donation_id):
     user_id = get_jwt_identity()
     user = User.query.get_or_404(user_id)
     donation = Donation.query.get_or_404(donation_id)
-    # Only hospital admins for the owning hospital can fulfill
+    
     if user.role != 'hospital_admin':
         return jsonify({'message': 'Access forbidden: Only hospital admins can fulfill donations.'}), 403
     hospital_id = user.hospital_id or (user.hospital.id if user.hospital else None)
     if not hospital_id or donation.request.hospital_id != hospital_id:
         return jsonify({'message': 'Access forbidden: Donation does not belong to your hospital.'}), 403
-    # Mark donation and request as completed/fulfilled
+    
     donation.status = 'Completed'
     donation.request.status = 'Fulfilled'
     db.session.add(donation)
