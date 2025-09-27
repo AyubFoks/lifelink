@@ -99,11 +99,15 @@ Contributions are welcome! Please feel free to submit a pull request or open an 
 
 ## Authors
 
-[Patricia Njuguna](https://github.com/Ms-Njuguna)
-[Daniel Muhia](https://github.com/Muhia88)
-[Purity Okaroni](https://github.com/PrincessOkaroni)
-[Ayub Karanja](https://github.com/AyubFoks)
-[Justin Tutu](https://github.com/JustinTutu5100)
+1. [Patricia Njuguna](https://github.com/Ms-Njuguna)
+
+2. [Daniel Muhia](https://github.com/Muhia88)
+
+3. [Purity Okaroni](https://github.com/PrincessOkaroni)
+
+4. [Ayub Karanja](https://github.com/AyubFoks)
+
+5. [Justin Tutu](https://github.com/JustinTutu5100)
 
 ## License
 
