@@ -22,7 +22,7 @@ python-dotenv = "*"
 psycopg2-binary = "*"
 SQLAlchemy-serializer = "*"
 Faker = "*" # For seeding the database
-gunicorn = "*" # For production deployment
+gunicorn = "*" 
 
 # Specifies packages only needed for development (optional but good practice).
 [dev-packages]

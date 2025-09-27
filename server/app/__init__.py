@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
@@ -6,29 +7,34 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 from .config import Config
 
+
 db = SQLAlchemy()
 migrate = Migrate()
 bcrypt = Bcrypt()
 jwt = JWTManager()
 
 def create_app(config_class=Config):
-    """Creates and configures an instance of the Flask application."""
+    """Creates and inits an instance of the Flask application."""
     app = Flask(__name__)
     app.config.from_object(config_class)
 
-    # Initialize extensions
+    app.url_map.strict_slashes = False
+
+    
     db.init_app(app)
     migrate.init_app(app, db)
     bcrypt.init_app(app)
     jwt.init_app(app)
-    CORS(app)
 
-    # Example root route
+
+    CORS(app, supports_credentials=True)
+
+
     @app.route("/")
     def home():
         return "Welcome to LifeLink API!"
 
-    # Register blueprints
+  
     from .routes.auth import auth_bp
     from .routes.requests import requests_bp
     from .routes.donations import donations_bp

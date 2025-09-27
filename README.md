@@ -57,11 +57,24 @@ cd server
 pipenv install
 pipenv shell
 flask db upgrade
-python seed.py # Optional: to populate the database with some initial data
+python seed.py 
 flask run
 ```
 
 The backend server will run on `http://localhost:5000`.
+
+### Environment variables (important)
+
+The server uses an environment variable `FRONTEND_URL` to configure CORS allowed origins. When deploying, set this to your Vercel frontend URL so the API accepts browser requests from the deployed frontend.
+
+Example values to set on Render (do NOT commit secrets to git):
+- FRONTEND_URL=https://lifelink-gules.vercel.app/
+- DATABASE_URI=postgresql://user:password@host:port/dbname
+- SECRET_KEY=some-secret
+- JWT_SECRET_KEY=some-jwt-secret
+
+On the frontend (Vercel), set the following environment variable so the build knows the API base URL:
+- VITE_API_URL=https://lifelink-backend-97rb.onrender.com/api
 
 ### 3. Frontend Setup
 ```bash

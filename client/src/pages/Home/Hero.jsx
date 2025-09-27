@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import videoBackground from "../../assets/videos/blood_donation2.mp4";
 
 export default function Hero() {
   return (
@@ -13,7 +12,7 @@ export default function Hero() {
         playsInline
         className="absolute z-10 w-auto min-w-full min-h-full max-w-none"
       >
-        <source src={videoBackground} type="video/mp4" />
+        <source src="/videos/blood_donation2.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 
@@ -30,13 +29,13 @@ export default function Hero() {
         </p>
         <div className="flex justify-center space-x-4">
           <Link
-            to="/login/donors"
+            to="/login/donor"
             className="px-6 py-3 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition-colors duration-300"
           >
             For Donors
           </Link>
           <Link
-            to="/login/hospitals"
+            to="/login/hospital"
             className="px-6 py-3 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition-colors duration-300"
           >
             For Hospitals

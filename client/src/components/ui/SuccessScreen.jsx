@@ -13,7 +13,7 @@ export default function SuccessScreen({ user }) {
 
       {/* Message */}
       <h1 className="text-2xl font-bold text-gray-800">
-        Welcome, {user?.name || user?.adminName || "User"}!
+        Welcome, {user?.full_name || user?.name || user?.adminName || user?.email || "User"}!
       </h1>
 
       {/* Spinner */}
