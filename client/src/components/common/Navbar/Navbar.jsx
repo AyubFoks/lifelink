@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from "../../../context/AuthContext";
 import logo from '../../../assets/logos/LifeLink-Logo.svg'
 import Button from '../../ui/Button'
@@ -8,17 +8,27 @@ export default function Navbar() {
   const { user, logout } = useAuth();
   const nav = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+
+  const getDashboardPath = () => {
+    if (user?.role === 'donor') {
+      return '/dashboard/donor';
+    } else if (user?.role === 'hospital_admin') {
+      return '/dashboard/hospital';
+    }
+    return '/';
+  };
+
+  const showDashboardButton = user && ['/', '/about', '/contact'].includes(location.pathname);
 
   return (
     <header>
       <nav className="bg-[#FDFBF9] px-4 py-3 shadow-md fixed top-0 left-0 right-0 z-50">
-        {/* Top bar: Logo + Hamburger */}
         <div className="flex max-w-7xl mx-auto px-6 md:px-12 justify-between items-center">
           <Link to="/">
             <img src={logo} className="w-auto h-[40px]" alt="LifeLink logo" />
           </Link>
 
-          {/* Hamburger (mobile only) */}
           <button
             className="md:hidden flex flex-col gap-1"
             onClick={() => setIsOpen(!isOpen)}
@@ -28,14 +38,15 @@ export default function Navbar() {
             <span className="w-6 h-0.5 bg-black"></span>
           </button>
 
-          {/* Desktop Links */}
           <div className="hidden md:flex gap-20 ml-6" style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.3)" }}>
             <NavLink to="/">Home</NavLink>
             <NavLink to="/about">About</NavLink>
             <NavLink to="/contact">Contact</NavLink>
+            {showDashboardButton && (
+              <NavLink to={getDashboardPath()}>Dashboard</NavLink>
+            )}
           </div>
 
-          {/* Desktop Buttons */}
           <div className="hidden md:flex items-center gap-4">
             {!user ? (
               <>
@@ -54,12 +65,14 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile Dropdown */}
         {isOpen && (
           <div className="flex flex-col gap-4 mt-4 md:hidden bg-[#FDFBF9] px-4 py-4 shadow-md rounded-md">
             <NavLink to="/" onClick={() => setIsOpen(false)}>Home</NavLink>
             <NavLink to="/about" onClick={() => setIsOpen(false)}>About</NavLink>
             <NavLink to="/contact" onClick={() => setIsOpen(false)}>Contact</NavLink>
+            {showDashboardButton && (
+              <NavLink to={getDashboardPath()} onClick={() => setIsOpen(false)}>Dashboard</NavLink>
+            )}
 
             <div className="flex flex-col gap-2 mt-2">
               {!user ? (
@@ -83,4 +96,3 @@ export default function Navbar() {
     </header>
   );
 }
-
