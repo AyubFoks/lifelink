@@ -1,6 +1,6 @@
 # LifeLink
 
-LifeLink is a real-time, location-aware platform that connects hospitals, patients, and donors based on specific blood or blood component needs. It streamlines the process of connecting donors and hospitals, ensuring efficient and effective resource allocation.
+[LifeLink](https://lifelink-gules.vercel.app/) is a real-time, location-aware platform that connects hospitals, patients, and donors based on specific blood or blood component needs. It streamlines the process of connecting donors and hospitals, ensuring efficient and effective resource allocation.
 
 ## Features
 
@@ -99,11 +99,11 @@ Contributions are welcome! Please feel free to submit a pull request or open an 
 
 ## Authors
 
-[Patricia Njuguna](https://github.com/Ms-Njuguna)
-[Daniel Muhia](https://github.com/Muhia88)
-[Purity Okaroni](https://github.com/PrincessOkaroni)
-[Ayub Karanja](https://github.com/AyubFoks)
-[Justin Tutu](https://github.com/JustinTutu5100)
+1. [Patricia Njuguna](https://github.com/Ms-Njuguna)
+2. [Daniel Muhia](https://github.com/Muhia88)
+3. [Purity Okaroni](https://github.com/PrincessOkaroni)
+4. [Ayub Karanja](https://github.com/AyubFoks)
+5. [Justin Tutu](https://github.com/JustinTutu5100)
 
 ## License
 
