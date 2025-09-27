@@ -78,6 +78,15 @@ export default function DonorDashboardPage() {
             <h1 className="text-3xl font-bold text-gray-800">Welcome, {user.full_name}!</h1>
             <p className="text-gray-600 mt-2">Ready to make a difference today?</p>
           </div>
+          
+           {/* Quick Actions */}
+          <DashboardCard title="Quick Actions">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Link to="/requests"><Button variant="secondary" className="w-full text-white px-3 py-2">Browse Requests</Button></Link>
+              <Link to="/profile"><Button variant="secondary" className="w-full text-white px-3 py-2">Update Profile</Button></Link>
+              <Link to="/donations/history"><Button variant="secondary" className="w-full text-white px-3 py-2">View Donation History</Button></Link>
+            </div>
+          </DashboardCard>
 
           {/* Stats Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
@@ -136,15 +145,6 @@ export default function DonorDashboardPage() {
             <div className="mt-4">
               <Link to="/donations/history"><Button className= "text-white py-2 px-3" variant="secondary">View full history</Button></Link>
             </div>
-          </DashboardCard>
-
-          {/* Quick Actions */}
-          <DashboardCard title="Quick Actions">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Link to="/requests"><Button variant="secondary" className="w-full text-white px-3 py-2">Browse Requests</Button></Link>
-        <Link to="/profile"><Button variant="secondary" className="w-full text-white px-3 py-2">Update Profile</Button></Link>
-        <Link to="/donations/history"><Button variant="secondary" className="w-full text-white px-3 py-2">View Donation History</Button></Link>
-      </div>
           </DashboardCard>
 
         </div>
