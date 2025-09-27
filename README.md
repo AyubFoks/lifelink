@@ -1,6 +1,6 @@
 # LifeLink
 
-[LifeLink](https://lifelink-gules.vercel.app/) is a real-time, location-aware platform that connects hospitals, patients, and donors based on specific blood or blood component needs. It streamlines the process of connecting donors and hospitals, ensuring efficient and effective resource allocation.
+[**LifeLink**](https://lifelink-gules.vercel.app/) is a real-time, location-aware platform that connects hospitals, patients, and donors based on specific blood or blood component needs. It streamlines the process of connecting donors and hospitals, ensuring efficient and effective resource allocation.
 
 ## Features
 
@@ -68,13 +68,13 @@ The backend server will run on `http://localhost:5000`.
 The server uses an environment variable `FRONTEND_URL` to configure CORS allowed origins. When deploying, set this to your Vercel frontend URL so the API accepts browser requests from the deployed frontend.
 
 Example values to set on Render (do NOT commit secrets to git):
-- FRONTEND_URL=https://lifelink-gules.vercel.app/
+- FRONTEND_URL=[add your own after doploying]
 - DATABASE_URI=postgresql://user:password@host:port/dbname
 - SECRET_KEY=some-secret
 - JWT_SECRET_KEY=some-jwt-secret
 
 On the frontend (Vercel), set the following environment variable so the build knows the API base URL:
-- VITE_API_URL=https://lifelink-backend-97rb.onrender.com/api
+- VITE_API_URL=[add your own after deploying backend]
 
 ### 3. Frontend Setup
 ```bash
@@ -99,11 +99,11 @@ Contributions are welcome! Please feel free to submit a pull request or open an 
 
 ## Authors
 
-1. [Patricia Njuguna](https://github.com/Ms-Njuguna)
-2. [Daniel Muhia](https://github.com/Muhia88)
-3. [Purity Okaroni](https://github.com/PrincessOkaroni)
-4. [Ayub Karanja](https://github.com/AyubFoks)
-5. [Justin Tutu](https://github.com/JustinTutu5100)
+- [Patricia Njuguna](https://github.com/Ms-Njuguna)
+- [Daniel Muhia](https://github.com/Muhia88)
+- [Purity Okaroni](https://github.com/PrincessOkaroni)
+- [Ayub Karanja](https://github.com/AyubFoks)
+- [Justin Tutu](https://github.com/JustinTutu5100)
 
 ## License
 
